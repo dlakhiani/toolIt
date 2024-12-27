@@ -52,7 +52,7 @@ app.post("/api/diagnose", async (req, res) => {
         6. Urgency of repairs needed`
 
         const completion = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
+            model: "gpt-4o",
             messages: [
                 {
                     role: "system",
