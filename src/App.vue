@@ -6,10 +6,10 @@
         <router-view></router-view>
     </div>
 </template>
-  
+
 <script>
     export default {
-        name: 'App'
+        name: "App",
     }
 </script>
 
@@ -29,4 +29,3 @@
         color: #2c3e50;
     }
 </style>
-  

@@ -20,6 +20,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
+        "allowJs": true,
 
         /* Path aliases */
         "baseUrl": ".",
@@ -27,13 +28,6 @@
             "@/*": ["src/*"]
         }
     },
-    "include": [
-        "src/**/*.ts", 
-        "src/**/*.d.ts", 
-        "src/**/*.tsx", 
-        "src/**/*.vue"
-    ],
-    "references": [
-        { "path": "./tsconfig.node.json" }
-    ]
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+    "references": [{ "path": "./tsconfig.node.json" }]
 }

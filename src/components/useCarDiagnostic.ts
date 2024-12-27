@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios"
 
 interface CarProblem {
     make: string
@@ -10,15 +10,15 @@ interface CarProblem {
 export function useCarDiagnostic() {
     const getDiagnostics = async (carProblem: CarProblem): Promise<string> => {
         try {
-            const response = await axios.post('/api/diagnose', carProblem)
+            const response = await axios.post("/api/diagnose", carProblem)
             return response.data.diagnosis
         } catch (error) {
-            console.error('Error getting diagnosis:', error)
-            throw new Error('Failed to get diagnosis')
+            console.error("Error getting diagnosis:", error)
+            throw new Error("Failed to get diagnosis")
         }
     }
 
     return {
-        getDiagnostics
+        getDiagnostics,
     }
 }

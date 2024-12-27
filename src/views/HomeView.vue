@@ -1,91 +1,109 @@
 <template>
     <div class="home-container">
         <div class="problem-form">
-        <div class="form-group">
-            <label>Car Make:</label>
-            <input v-model="carMake" type="text" placeholder="e.g., Toyota" />
+            <div class="form-group">
+                <label>Car Make:</label>
+                <input
+                    v-model="carMake"
+                    type="text"
+                    placeholder="e.g., Toyota"
+                />
+            </div>
+            <div class="form-group">
+                <label>Car Model:</label>
+                <input
+                    v-model="carModel"
+                    type="text"
+                    placeholder="e.g., Camry"
+                />
+            </div>
+            <div class="form-group">
+                <label>Year:</label>
+                <input
+                    v-model="carYear"
+                    type="number"
+                    placeholder="e.g., 2018"
+                />
+            </div>
+            <div class="form-group">
+                <label>Describe the problem:</label>
+                <textarea
+                    v-model="problem"
+                    placeholder="Describe what's happening with your car... (e.g., strange noise when braking, won't start in cold weather, etc.)"
+                    rows="4"
+                ></textarea>
+            </div>
+            <button
+                @click="getDiagnosis"
+                :disabled="isLoading"
+                class="submit-button"
+            >
+                {{ isLoading ? "Getting Diagnosis..." : "Get Diagnosis" }}
+            </button>
         </div>
-        <div class="form-group">
-            <label>Car Model:</label>
-            <input v-model="carModel" type="text" placeholder="e.g., Camry" />
-        </div>
-        <div class="form-group">
-            <label>Year:</label>
-            <input v-model="carYear" type="number" placeholder="e.g., 2018" />
-        </div>
-        <div class="form-group">
-            <label>Describe the problem:</label>
-            <textarea 
-                v-model="problem" 
-                placeholder="Describe what's happening with your car... (e.g., strange noise when braking, won't start in cold weather, etc.)"
-                rows="4"
-            ></textarea>
-        </div>
-        <button 
-            @click="getDiagnosis" 
-            :disabled="isLoading"
-            class="submit-button"
+
+        <div
+            v-if="diagnosis"
+            class="diagnosis-container"
         >
-            {{ isLoading ? 'Getting Diagnosis...' : 'Get Diagnosis' }}
-        </button>
+            <h2>Diagnosis & Solution</h2>
+            <div class="diagnosis-content">
+                {{ diagnosis }}
+            </div>
         </div>
 
-        <div v-if="diagnosis" class="diagnosis-container">
-        <h2>Diagnosis & Solution</h2>
-        <div class="diagnosis-content">
-            {{ diagnosis }}
-        </div>
-        </div>
-
-        <div v-if="error" class="error-message">
+        <div
+            v-if="error"
+            class="error-message"
+        >
             {{ error }}
         </div>
     </div>
 </template>
-  
+
 <script>
-    import { useCarDiagnostic } from '@/components/useCarDiagnostic'
-    
+    import { useCarDiagnostic } from "@/components/useCarDiagnostic"
+
     export default {
-        name: 'HomeView',
+        name: "HomeView",
         data() {
             return {
-                carMake: '',
-                carModel: '',
+                carMake: "",
+                carModel: "",
                 carYear: null,
-                problem: '',
-                diagnosis: '',
-                error: '',
+                problem: "",
+                diagnosis: "",
+                error: "",
                 isLoading: false,
-                carDiagnostic: useCarDiagnostic()
+                carDiagnostic: useCarDiagnostic(),
             }
         },
         methods: {
             async getDiagnosis() {
                 if (!this.carMake || !this.carModel || !this.carYear || !this.problem) {
-                    this.error = 'Please fill in all fields'
+                    this.error = "Please fill in all fields"
                     return
                 }
-        
+
                 try {
                     this.isLoading = true
-                    this.error = ''
+                    this.error = ""
                     this.diagnosis = await this.carDiagnostic.getDiagnostics({
                         make: this.carMake,
                         model: this.carModel,
                         year: this.carYear,
-                        problem: this.problem
+                        problem: this.problem,
                     })
                 } catch (err) {
-                    this.error = 'Failed to get diagnosis. Please try again.'
+                    this.error = "Failed to get diagnosis. Please try again."
                 } finally {
                     this.isLoading = false
                 }
-            }
-        }
+            },
+        },
     }
 </script>
-  
+
 <style scoped>
     .home-container {
         display: flex;
@@ -110,7 +128,8 @@
         color: #2c3e50;
     }
 
-    input, textarea {
+    input,
+    textarea {
         padding: 0.5rem;
         border: 1px solid #ddd;
         border-radius: 4px;
@@ -149,4 +168,3 @@
         border-radius: 4px;
     }
 </style>
-  
