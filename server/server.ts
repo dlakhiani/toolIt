@@ -58,9 +58,10 @@ app.post("/api/diagnose", async (req, res) => {
                     role: "system",
                     content: "You are an experienced automotive mechanic and diagnostician.",
                 },
-                { role: "user", content: prompt },
-                { role: "system", content: "You are an experienced automotive mechanic and diagnostician." },
-                { role: "user", content: prompt },
+                {
+                    role: "user",
+                    content: prompt,
+                },
             ],
         })
         const diagnosis = completion.choices[0].message?.content || "No diagnosis available"
