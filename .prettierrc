@@ -1,0 +1,9 @@
+{
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": false,
+    "vueIndentScriptAndStyle": true,
+    "singleAttributePerLine": true,
+    "printWidth": 120,
+    "arrowParens": "always"
+}
