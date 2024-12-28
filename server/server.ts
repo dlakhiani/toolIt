@@ -3,27 +3,42 @@ import { OpenAI } from "openai"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
 import cors from "cors"
+import User from "./models/User.ts"
 
 dotenv.config()
 
-const app = express()
-
 try {
+    // test connection when booted
     await mongoose.connect(process.env.MONGODB_URI!)
     await mongoose.connection.db?.admin().command({
         ping: 1,
     })
     console.log("Connected to MongoDB successfully")
+
+    const newUser = new User({
+        name: "John Doe",
+        email: "forgotAboutDatDoe@test.com",
+    })
+    console.log(newUser.name)
+
+    await User.findByEmail("forgotAboutDatDoe@test.com").then((user) => {
+        if (user) {
+            console.log(user.getGreeting())
+        } else {
+            newUser.save().then(() => {
+                console.log(`Saved User: ${newUser.name}`)
+                mongoose.disconnect()
+            })
+        }
+    })
 } catch (error) {
     console.error("MongoDB connection error:", error)
-} finally {
-    await mongoose.disconnect()
 }
 
+const app = express()
 app.use(express.json())
 app.use(cors())
 
-// OpenAI Connection
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 })
@@ -56,15 +71,13 @@ app.post("/api/diagnose", async (req, res) => {
             messages: [
                 {
                     role: "system",
-                    content:
-                        "You are an experienced automotive mechanic and diagnostician.",
+                    content: "You are an experienced automotive mechanic and diagnostician.",
                 },
                 { role: "user", content: prompt },
             ],
         })
 
-        const diagnosis =
-            completion.choices[0].message?.content || "No diagnosis available"
+        const diagnosis = completion.choices[0].message?.content || "No diagnosis available"
         res.json({ diagnosis })
     } catch (error) {
         console.error("Error:", error)
