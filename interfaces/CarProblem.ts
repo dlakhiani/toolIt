@@ -1,14 +1,14 @@
 export class CarProblem {
-    make: string;
-    model: string;
-    year: number;
-    problem: string;
+    make: string
+    model: string
+    year: number
+    problem: string
 
     constructor(make: string, model: string, year: number, problem: string) {
-        this.make = make;
-        this.model = model;
-        this.year = year;
-        this.problem = problem;
+        this.make = make
+        this.model = model
+        this.year = year
+        this.problem = problem
     }
 
     generatePrompt(): string {
@@ -22,6 +22,6 @@ export class CarProblem {
         3. Possible solutions
         4. Estimated cost range for repairs
         5. Whether this is safe to drive with
-        6. Urgency of repairs needed`;
+        6. Urgency of repairs needed`
     }
 }
