@@ -1,23 +1,23 @@
-import axios from 'axios';
-import { CarProblem } from '../../interfaces/CarProblem';
+import axios from "axios"
+import { CarProblem } from "../../interfaces/CarProblem.ts"
 
 export function useCarDiagnostic() {
     const getDiagnostics = async (carProblem: CarProblem): Promise<string> => {
         try {
-            const response = await axios.post('/api/diagnose', {
+            const response = await axios.post("/api/diagnose", {
                 make: carProblem.make,
                 model: carProblem.model,
                 year: carProblem.year,
                 problem: carProblem.problem,
-            });
-            return response.data.diagnosis;
+            })
+            return response.data.diagnosis
         } catch (error) {
-            console.error('Error getting diagnosis:', error);
-            throw new Error('Failed to get diagnosis');
+            console.error("Error getting diagnosis:", error)
+            throw new Error("Failed to get diagnosis")
         }
-    };
+    }
 
     return {
         getDiagnostics,
-    };
+    }
 }
