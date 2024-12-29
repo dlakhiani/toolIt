@@ -61,8 +61,8 @@
 </template>
 
 <script lang="ts">
-    import { useCarDiagnostic } from "@/components/useCarDiagnostic"
-    import { CarProblem } from "../../interfaces/CarProblem"
+    import { useCarDiagnostic } from "@/components/useCarDiagnostic.ts"
+    import { CarProblem } from "../../interfaces/CarProblem.ts"
 
     export default {
         name: "HomeView",

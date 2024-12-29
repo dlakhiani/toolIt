@@ -3,8 +3,8 @@ import { OpenAI } from "openai"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
 import cors from "cors"
-import User from "./models/User"
-import { CarProblem } from "../interfaces/CarProblem"
+import User from "./models/User.ts"
+import { CarProblem } from "../interfaces/CarProblem.ts"
 
 dotenv.config()
 
