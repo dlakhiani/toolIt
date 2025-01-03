@@ -10,7 +10,7 @@ dotenv.config()
 const traceExporter = new OTLPTraceExporter({
     url: "https://api.axiom.co/v1/traces",
     headers: {
-        Authorization: process.env.AXIOM_API_TOKEN, //Axiom API token
+        Authorization: `${process.env.AXIOM_API_TOKEN}`, //Axiom API token
         "X-Axiom-Dataset": "toolIt", // Axiom dataset name
     },
 })

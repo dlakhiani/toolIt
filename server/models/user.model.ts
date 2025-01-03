@@ -42,6 +42,6 @@ userSchema.static("findByEmail", function findByEmail(email: string) {
     return this.findOne({ email })
 })
 
-const User = mongoose.model<IUser, IUserModel>("User", userSchema)
+const User = mongoose.model<IUser, IUserModel>("user", userSchema)
 
 export default User
