@@ -61,8 +61,7 @@
 </template>
 
 <script lang="ts">
-    import { useCarDiagnostic } from "@/components/useCarDiagnostic.ts"
-    import { CarProblem } from "../../interfaces/CarProblem.ts"
+    import { getVehicleDiagnostic } from "@/components/vehicleDiagnostic.ts"
 
     export default {
         name: "HomeView",
@@ -75,7 +74,6 @@
                 diagnosis: "",
                 error: "",
                 isLoading: false,
-                carDiagnostic: useCarDiagnostic(),
             }
         },
         methods: {
@@ -89,9 +87,7 @@
                     this.isLoading = true
                     this.error = ""
 
-                    const carProblem = new CarProblem(this.carMake, this.carModel, this.carYear, this.problem)
-
-                    this.diagnosis = await this.carDiagnostic.getDiagnostics(carProblem)
+                    this.diagnosis = await getVehicleDiagnostic(this.carMake, this.carModel, this.carYear, this.problem)
                 } catch (err) {
                     this.error = "Failed to get diagnosis. Please try again."
                 } finally {
