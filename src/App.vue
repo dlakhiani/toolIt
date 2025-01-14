@@ -2,8 +2,22 @@
     <div class="app-container">
         <header>
             <h1>ToolIt</h1>
+            <br />
+            <nav class="nav-bar">
+                <ul>
+                    <li>
+                        <router-link to="/info">Car Info</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/prompt">Problem Prompt</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/about">About Page</router-link>
+                    </li>
+                </ul>
+            </nav>
         </header>
-        <router-view></router-view>
+        <router-view />
     </div>
 </template>
 
