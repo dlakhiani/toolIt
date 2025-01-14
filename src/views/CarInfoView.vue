@@ -45,31 +45,36 @@
     </div>
 </template>
 
-<script setup>
-    import { ref } from "vue"
+<script lang="ts">
+    import { defineComponent } from "vue"
     import { useRouter } from "vue-router"
 
-    const router = useRouter()
-
-    const carMake = ref("")
-    const carModel = ref("")
-    const carYear = ref(null)
-
-    const goToPromptPage = () => {
-        if (!carMake.value || !carModel.value || !carYear.value) {
-            alert("Please fill in all fields")
-            return
-        }
-
-        router.push({
-            name: "prompt",
-            query: {
-                carMake: carMake.value,
-                carModel: carModel.value,
-                carYear: carYear.value,
+    export default defineComponent({
+        name: "CarInfoView",
+        data() {
+            return {
+                carMake: "",
+                carModel: "",
+                carYear: null as number | null,
+            }
+        },
+        methods: {
+            goToPromptPage() {
+                if (!this.carMake || !this.carModel || !this.carYear) {
+                    alert("Please fill in all fields")
+                    return
+                }
+                this.$router.push({
+                    name: "prompt",
+                    query: {
+                        carMake: this.carMake,
+                        carModel: this.carModel,
+                        carYear: this.carYear.toString(),
+                    },
+                })
             },
-        })
-    }
+        },
+    })
 </script>
 
 <style scoped>

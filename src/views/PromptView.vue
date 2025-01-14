@@ -41,48 +41,62 @@
     </div>
 </template>
 
-<script setup>
-    import { ref, onMounted } from "vue"
+<script lang="ts">
+    import { defineComponent } from "vue"
     import { useRoute } from "vue-router"
     import { useCarDiagnostic } from "@/components/useCarDiagnostic.ts"
     import { CarProblem } from "../../interfaces/CarProblem.ts"
 
-    const route = useRoute()
+    export default defineComponent({
+        name: "PromptView",
+        data() {
+            return {
+                carMake: "",
+                carModel: "",
+                carYear: 0,
+                problem: "",
+                diagnosis: "",
+                error: "",
+                isLoading: false,
+                carDiagnostic: useCarDiagnostic(),
+            }
+        },
+        mounted() {
+            // Safely extract and validate query parameters
+            const carMakeQuery = this.$route.query.carMake
+            const carModelQuery = this.$route.query.carModel
+            const carYearQuery = Number(this.$route.query.carYear) || 0
+            this.carMake = typeof carMakeQuery === "string" ? carMakeQuery : ""
+            this.carModel = typeof carModelQuery === "string" ? carModelQuery : ""
+            this.carYear = typeof carYearQuery === "number" ? Number(carYearQuery) : 0
+        },
+        computed: {
+            route() {
+                return useRoute()
+            },
+        },
+        methods: {
+            async getDiagnosis() {
+                if (!this.problem) {
+                    this.error = "Please describe the problem"
+                    return
+                }
 
-    const carMake = ref("")
-    const carModel = ref("")
-    const carYear = ref(null)
-    const problem = ref("")
-    const diagnosis = ref("")
-    const error = ref("")
-    const isLoading = ref(false)
-    const carDiagnostic = useCarDiagnostic()
+                try {
+                    this.isLoading = true
+                    this.error = ""
 
-    onMounted(() => {
-        carMake.value = route.query.carMake || ""
-        carModel.value = route.query.carModel || ""
-        carYear.value = route.query.carYear || ""
+                    const carProblem = new CarProblem(this.carMake, this.carModel, this.carYear, this.problem)
+
+                    this.diagnosis = await useCarDiagnostic().getDiagnostics(carProblem)
+                } catch (err) {
+                    this.error = "Failed to get diagnosis. Please try again."
+                } finally {
+                    this.isLoading = false
+                }
+            },
+        },
     })
-
-    const getDiagnosis = async () => {
-        if (!problem.value) {
-            error.value = "Please describe the problem"
-            return
-        }
-
-        try {
-            isLoading.value = true
-            error.value = ""
-
-            const carProblem = new CarProblem(carMake.value, carModel.value, carYear.value, problem.value)
-
-            diagnosis.value = await carDiagnostic.getDiagnostics(carProblem)
-        } catch (err) {
-            error.value = "Failed to get diagnosis. Please try again."
-        } finally {
-            isLoading.value = false
-        }
-    }
 </script>
 
 <style scoped>
