@@ -44,8 +44,7 @@
 <script lang="ts">
     import { defineComponent } from "vue"
     import { useRoute } from "vue-router"
-    import { useCarDiagnostic } from "@/components/useCarDiagnostic.ts"
-    import { CarProblem } from "../../interfaces/CarProblem.ts"
+    import { getVehicleDiagnostic } from "@/components/vehicleDiagnostic.ts"
 
     export default defineComponent({
         name: "PromptView",
@@ -85,9 +84,7 @@
                     this.isLoading = true
                     this.error = ""
 
-                    const carProblem = new CarProblem(this.carMake, this.carModel, this.carYear, this.problem)
-
-                    this.diagnosis = await useCarDiagnostic().getDiagnostics(carProblem)
+                    this.diagnosis = await getVehicleDiagnostic(this.carMake, this.carModel, this.carYear, this.problem)
                 } catch (err) {
                     this.error = "Failed to get diagnosis. Please try again."
                 } finally {
