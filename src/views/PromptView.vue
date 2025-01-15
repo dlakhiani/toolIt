@@ -58,7 +58,6 @@
                 diagnosis: "",
                 error: "",
                 isLoading: false,
-                carDiagnostic: useCarDiagnostic(),
             }
         },
         mounted() {
