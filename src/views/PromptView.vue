@@ -43,7 +43,6 @@
 
 <script lang="ts">
     import { defineComponent } from "vue"
-    import { useRoute } from "vue-router"
     import { getVehicleDiagnostic } from "@/components/vehicleDiagnostic.ts"
 
     export default defineComponent({
@@ -52,7 +51,7 @@
             return {
                 carMake: "",
                 carModel: "",
-                carYear: 0,
+                carYear: null as number | null,
                 problem: "",
                 diagnosis: "",
                 error: "",
@@ -60,18 +59,11 @@
             }
         },
         mounted() {
-            // Safely extract and validate query parameters
-            const carMakeQuery = this.$route.query.carMake
-            const carModelQuery = this.$route.query.carModel
-            const carYearQuery = Number(this.$route.query.carYear) || 0
-            this.carMake = typeof carMakeQuery === "string" ? carMakeQuery : ""
-            this.carModel = typeof carModelQuery === "string" ? carModelQuery : ""
-            this.carYear = typeof carYearQuery === "number" ? Number(carYearQuery) : 0
-        },
-        computed: {
-            route() {
-                return useRoute()
-            },
+            const { carMake = "", carModel = "", carYear = null } = this.$route.query
+            // I still hate how this looks but we ball keep having type issuing with carYear
+            this.carMake = typeof carMake === "string" ? carMake : ""
+            this.carModel = typeof carModel === "string" ? carModel : ""
+            this.carYear = !isNaN(Number(carYear)) ? Number(carYear) : (null as number | null)
         },
         methods: {
             async getDiagnosis() {
@@ -83,8 +75,9 @@
                 try {
                     this.isLoading = true
                     this.error = ""
-
-                    this.diagnosis = await getVehicleDiagnostic(this.carMake, this.carModel, this.carYear, this.problem)
+                    //this.carYear keeps having data type issues, why as number was added
+                    const carProblem = new CarProblem(this.carMake, this.carModel, this.carYear as number, this.problem)
+                    this.diagnosis = await useCarDiagnostic().getDiagnostics(carProblem)
                 } catch (err) {
                     this.error = "Failed to get diagnosis. Please try again."
                 } finally {

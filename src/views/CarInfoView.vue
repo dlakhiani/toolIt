@@ -47,15 +47,13 @@
 
 <script lang="ts">
     import { defineComponent } from "vue"
-    import { useRouter } from "vue-router"
-
     export default defineComponent({
         name: "CarInfoView",
         data() {
             return {
                 carMake: "",
                 carModel: "",
-                carYear: null as number | null,
+                carYear: null,
             }
         },
         methods: {
@@ -69,7 +67,7 @@
                     query: {
                         carMake: this.carMake,
                         carModel: this.carModel,
-                        carYear: this.carYear.toString(),
+                        carYear: this.carYear,
                     },
                 })
             },
