@@ -76,8 +76,12 @@
                     this.isLoading = true
                     this.error = ""
                     //this.carYear keeps having data type issues, why as number was added
-                    const carProblem = new CarProblem(this.carMake, this.carModel, this.carYear as number, this.problem)
-                    this.diagnosis = await useCarDiagnostic().getDiagnostics(carProblem)
+                    this.diagnosis = await getVehicleDiagnostic(
+                        this.carMake,
+                        this.carModel,
+                        this.carYear as number,
+                        this.problem
+                    )
                 } catch (err) {
                     this.error = "Failed to get diagnosis. Please try again."
                 } finally {
