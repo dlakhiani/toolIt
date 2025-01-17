@@ -53,7 +53,7 @@
             return {
                 carMake: "",
                 carModel: "",
-                carYear: null,
+                carYear: 0,
             }
         },
         methods: {

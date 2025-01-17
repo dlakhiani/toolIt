@@ -51,7 +51,7 @@
             return {
                 carMake: "",
                 carModel: "",
-                carYear: null as number | null,
+                carYear: 0,
                 problem: "",
                 diagnosis: "",
                 error: "",
@@ -59,11 +59,11 @@
             }
         },
         mounted() {
-            const { carMake = "", carModel = "", carYear = null } = this.$route.query
+            const { carMake = "", carModel = "", carYear = 0 } = this.$route.query
             // I still hate how this looks but we ball keep having type issuing with carYear
             this.carMake = typeof carMake === "string" ? carMake : ""
             this.carModel = typeof carModel === "string" ? carModel : ""
-            this.carYear = !isNaN(Number(carYear)) ? Number(carYear) : (null as number | null)
+            this.carYear = !isNaN(Number(carYear)) ? Number(carYear) : 0
         },
         methods: {
             async getDiagnosis() {
