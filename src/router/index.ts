@@ -1,13 +1,24 @@
 import { createRouter, createWebHistory } from "vue-router"
-import HomeView from "../views/HomeView.vue"
-
+import PromptView from "../views/PromptView.vue"
+import AboutView from "../views/AboutView.vue"
+import CarInfoView from "../views/CarInfoView.vue"
 const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
-            path: "/",
-            name: "home",
-            component: HomeView,
+            path: "/prompt",
+            name: "prompt",
+            component: PromptView,
+        },
+        {
+            path: "/about",
+            name: "about",
+            component: AboutView,
+        },
+        {
+            path: "/info",
+            name: "info",
+            component: CarInfoView,
         },
     ],
 })

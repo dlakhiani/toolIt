@@ -3,7 +3,7 @@ import axios from "axios"
 export async function getVehicleDiagnostic(
     make: string,
     model: string,
-    year: string,
+    year: number,
     problem: string
 ): Promise<string> {
     try {
