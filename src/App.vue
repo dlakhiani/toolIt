@@ -6,6 +6,9 @@
             <nav class="nav-bar">
                 <ul>
                     <li>
+                        <router-link to="/logIn">Log In Page</router-link>
+                    </li>
+                    <li>
                         <router-link to="/info">Car Info</router-link>
                     </li>
                     <li>
