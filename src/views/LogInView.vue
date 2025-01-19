@@ -6,9 +6,19 @@
             class="login-form"
         >
             <div class="form-group">
-                <label for="email">Email:</label>
+                <label>Name:</label>
                 <input
-                    id="email"
+                    name="name"
+                    v-model="name"
+                    type="text"
+                    placeholder="Enter your name"
+                    required
+                />
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input
+                    name="email"
                     v-model="email"
                     type="email"
                     placeholder="Enter your email"
@@ -16,9 +26,9 @@
                 />
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
+                <label>Password:</label>
                 <input
-                    id="password"
+                    name="password"
                     v-model="password"
                     type="password"
                     placeholder="Enter your password"
@@ -48,6 +58,7 @@
         name: "LoginView",
         data() {
             return {
+                name: "",
                 email: "",
                 password: "",
                 errorMessage: "",
@@ -55,7 +66,7 @@
         },
         methods: {
             async loginUser() {
-                if (!this.email || !this.password) {
+                if (!this.name || !this.email || !this.password) {
                     this.errorMessage = "Please fill in all fields."
                     return
                 }
@@ -66,6 +77,7 @@
                     this.errorMessage = ""
 
                     console.log("Login Data:", {
+                        name: this.name,
                         email: this.email,
                         password: this.password,
                     })
