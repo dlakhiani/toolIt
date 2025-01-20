@@ -8,7 +8,6 @@
             <div class="form-group">
                 <label>Name:</label>
                 <input
-                    name="name"
                     v-model="name"
                     type="text"
                     placeholder="Enter your name"
@@ -18,7 +17,6 @@
             <div class="form-group">
                 <label>Email:</label>
                 <input
-                    name="email"
                     v-model="email"
                     type="email"
                     placeholder="Enter your email"
@@ -28,7 +26,6 @@
             <div class="form-group">
                 <label>Password:</label>
                 <input
-                    name="password"
                     v-model="password"
                     type="password"
                     placeholder="Enter your password"
