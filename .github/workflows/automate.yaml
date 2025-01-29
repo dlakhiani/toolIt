@@ -6,6 +6,11 @@ on:
     issues:
         types: [assigned]
 
+permissions:
+    issues: write
+    pull-requests: write
+    repository-projects: write
+
 jobs:
     update-issue-status:
         runs-on: ubuntu-latest
@@ -19,6 +24,7 @@ jobs:
               with:
                   script: |
                       const issueNumber = context.payload.pull_request.number;
+
                       await github.rest.issues.update({
                         owner: context.repo.owner,
                         repo: context.repo.repo,
@@ -32,6 +38,7 @@ jobs:
               with:
                   script: |
                       const issueNumber = context.payload.pull_request.number;
+
                       await github.rest.issues.update({
                         owner: context.repo.owner,
                         repo: context.repo.repo,
@@ -47,10 +54,9 @@ jobs:
                       const issueNumber = context.payload.issue.number;
                       const assignee = context.payload.assignee.login;
 
-                      // Update the issue status to "in progress" when assigned
                       await github.rest.issues.update({
                         owner: context.repo.owner,
                         repo: context.repo.repo,
                         issue_number: issueNumber,
-                        labels: ['status: in progress'] // Set status to "in progress"
+                        labels: ['status: in progress']
                       });
