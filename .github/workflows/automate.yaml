@@ -11,6 +11,10 @@ permissions:
     pull-requests: write
     repository-projects: write
 
+env:
+    repo_owner: dlakhiani
+    repo_title: toolIt
+
 jobs:
     update-issue-status:
         runs-on: ubuntu-latest
@@ -18,45 +22,34 @@ jobs:
             - name: checkout repository
               uses: actions/checkout@v3
 
-            - name: update issue status when PR is opened
-              if: github.event_name == 'pull_request' && github.event.action == 'opened'
-              uses: actions/github-script@v6
-              with:
-                  script: |
-                      const issueNumber = context.payload.pull_request.number;
-
-                      await github.rest.issues.update({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        issue_number: issueNumber,
-                        labels: ['status: validate']
-                      });
-
-            - name: update issue status when PR is closed
-              if: github.event_name == 'pull_request' && github.event.action == 'closed'
-              uses: actions/github-script@v6
-              with:
-                  script: |
-                      const issueNumber = context.payload.pull_request.number;
-
-                      await github.rest.issues.update({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        issue_number: issueNumber,
-                        labels: ['status: done']
-                      });
-
-            - name: update issue status when assigned
+            - name: read issue status when assigned
               if: github.event_name == 'issues' && github.event.action == 'assigned'
               uses: actions/github-script@v6
               with:
                   script: |
                       const issueNumber = context.payload.issue.number;
-                      const assignee = context.payload.assignee.login;
-
-                      await github.rest.issues.update({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        issue_number: issueNumber,
-                        labels: ['status: in progress']
-                      });
+                      const query = `
+                          query {
+                              repository(owner: ${{ env.repo_owner }}, name: ${{ env.repo_title }}) {
+                                  issue(number: ${issueNumber}) {
+                                      title
+                                      projectItems(first: 10) {
+                                          nodes {
+                                            fieldValues(first: 10) {
+                                                edges {
+                                                    node {
+                                                        ... on ProjectV2ItemFieldSingleSelectValue {
+                                                            name
+                                                            color
+                                                            description
+                                                        }
+                                                    } 
+                                                }
+                                            }
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      `;
+                      const response = await github.graphql(query);
