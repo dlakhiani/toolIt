@@ -1,0 +1,53 @@
+- name: update issue status when PR is opened
+  if: github.event_name == 'pull_request' && github.event.action == 'opened'
+  uses: actions/github-script@v6
+  with:
+      script: |
+          const isseu = context.payload.issue.number;
+          const projectId = ${{ env.projectId }};
+          const statusFieldId = 'PTF_status'; // Replace with your status field ID
+          const inProgressOptionId = '47fc9ee4'; // Replace with your "In Progress" option ID
+
+          await github.graphql(`
+            mutation {
+              updateProjectV2ItemFieldValue(
+                input: {
+                  projectId: "${projectId}"
+                  itemId: "${issueId}"
+                  fieldId: "${statusFieldId}"
+                  value: { singleSelectOptionId: "${inProgressOptionId}" }
+                }
+              ) {
+                projectV2Item {
+                  id
+                }
+              }
+            }
+          `);
+
+- name: update issue status when PR is closed
+  if: github.event_name == 'pull_request' && github.event.action == 'closed'
+  uses: actions/github-script@v6
+  with:
+      script: |
+          const issueId = context.payload.pull_request.node_id;
+          const projectId = 'PVT_kwDOABcXYZ'; // Replace with your project ID
+          const statusFieldId = 'PTF_status'; // Replace with your status field ID
+          const doneOptionId = '47fc9ee5'; // Replace with your "Done" option ID
+
+          await github.graphql(`
+            mutation {
+              updateProjectV2ItemFieldValue(
+                input: {
+                  projectId: "${projectId}"
+                  itemId: "${issueId}"
+                  fieldId: "${statusFieldId}"
+                  value: { singleSelectOptionId: "${doneOptionId}" }
+                }
+              ) {
+                projectV2Item {
+                  id
+                }
+              }
+            }
+          `);
