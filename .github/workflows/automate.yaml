@@ -15,14 +15,5 @@ jobs:
     update-issue-status:
         name: move issues to repository project column
         runs-on: ubuntu-latest
-        steps:
-            - name: move issue to 'In Progress' column if body has a mark 'issue:inprogress'
-              uses: fojia/action-move-issues-to-column@v1.0.2
-              with:
-                  project: "ToolIt"
-                  column: "In Progress"
-                  owner: "dlakhiani"
-                  repo: "toolIt"
-                  type: "repo"
-                  github_token: "${{ secrets.GITHUB_TOKEN }}"
-                  marker: "issue:inprogress"
+        # another day, we shall make this possible ... seems like project
+        # cards have been deprecated and can't mutate through github api x_x
