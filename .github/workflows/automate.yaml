@@ -11,45 +11,18 @@ permissions:
     pull-requests: write
     repository-projects: write
 
-env:
-    repo_owner: dlakhiani
-    repo_title: toolIt
-
 jobs:
     update-issue-status:
+        name: move issues to repository project column
         runs-on: ubuntu-latest
         steps:
-            - name: checkout repository
-              uses: actions/checkout@v3
-
-            - name: read issue status when assigned
-              if: github.event_name == 'issues' && github.event.action == 'assigned'
-              uses: actions/github-script@v6
+            - name: move issue to 'In Progress' column if body has a mark 'issue:inprogress'
+              uses: fojia/action-move-issues-to-column@v1.0.2
               with:
-                  script: |
-                      const issueNumber = context.payload.issue.number;
-                      const query = `
-                          query {
-                              repository(owner: ${{ env.repo_owner }}, name: ${{ env.repo_title }}) {
-                                  issue(number: ${issueNumber}) {
-                                      title
-                                      projectItems(first: 10) {
-                                          nodes {
-                                            fieldValues(first: 10) {
-                                                edges {
-                                                    node {
-                                                        ... on ProjectV2ItemFieldSingleSelectValue {
-                                                            name
-                                                            color
-                                                            description
-                                                        }
-                                                    } 
-                                                }
-                                            }
-                                          }
-                                      }
-                                  }
-                              }
-                          }
-                      `;
-                      const response = await github.graphql(query);
+                  project: "ToolIt"
+                  column: "In Progress"
+                  owner: "dlakhiani"
+                  repo: "toolIt"
+                  type: "repo"
+                  github_token: "${{ secrets.GITHUB_TOKEN }}"
+                  marker: "issue:inprogress"
