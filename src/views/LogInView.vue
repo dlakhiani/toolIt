@@ -50,6 +50,7 @@
 
 <script lang="ts">
     import { defineComponent } from "vue"
+    import emailjs from "@emailjs/browser"
 
     export default defineComponent({
         name: "LoginView",
@@ -68,7 +69,6 @@
                     return
                 }
 
-                const emailPublicKey = process.env.VITE_EMAIL_PUBLIC_KEY
                 try {
                     //need to connect data to the backend and have it saved
                     //only displays data on the console for now
@@ -78,8 +78,29 @@
                         name: this.name,
                         email: this.email,
                         password: this.password,
-                        emailPublicKey: emailPublicKey,
                     })
+
+                    emailjs
+                        .send(
+                            "personal_handy_service",
+                            "contact_form_template",
+                            {
+                                user_name: this.name,
+                                user_email: this.email,
+                            },
+                            {
+                                publicKey: process.env.VITE_EMAIL_PUBLIC_KEY,
+                            }
+                        )
+                        .then(
+                            () => {
+                                console.log("email sent !")
+                            },
+                            (error) => {
+                                console.log("email failed: ", error.text)
+                            }
+                        )
+
                     alert("Login successful!")
                 } catch (error) {
                     this.errorMessage = "An unexpected error occurred. Please try again."
