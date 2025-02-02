@@ -1,23 +1,33 @@
-import { defineConfig } from "vite"
+import { defineConfig, loadEnv } from "vite"
 import vue from "@vitejs/plugin-vue"
 import path from "path"
 
-export default defineConfig({
-    plugins: [vue()],
-    resolve: {
-        alias: {
-            "@": path.resolve(__dirname, "./src"),
+export default ({ mode }) => {
+    process.env = {
+        ...process.env,
+        ...loadEnv(mode, process.cwd()),
+    }
+
+    return defineConfig({
+        define: {
+            "process.env": process.env,
         },
-    },
-    build: {
-        outDir: "build/src",
-    },
-    server: {
-        proxy: {
-            "/api": {
-                target: "http://localhost:3000",
-                changeOrigin: true,
+        plugins: [vue()],
+        resolve: {
+            alias: {
+                "@": path.resolve(__dirname, "./src"),
             },
         },
-    },
-})
+        build: {
+            outDir: "build/src",
+        },
+        server: {
+            proxy: {
+                "/api": {
+                    target: process.env.VITE_API_URL,
+                    changeOrigin: true,
+                },
+            },
+        },
+    })
+}
