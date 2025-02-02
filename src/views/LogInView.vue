@@ -68,6 +68,7 @@
                     return
                 }
 
+                const emailPublicKey = process.env.VITE_EMAIL_PUBLIC_KEY
                 try {
                     //need to connect data to the backend and have it saved
                     //only displays data on the console for now
@@ -77,6 +78,7 @@
                         name: this.name,
                         email: this.email,
                         password: this.password,
+                        emailPublicKey: emailPublicKey,
                     })
                     alert("Login successful!")
                 } catch (error) {
