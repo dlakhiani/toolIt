@@ -4,7 +4,9 @@ import cors from "cors"
 import connectToMongo from "./mongo/database.ts"
 import mongoose from "mongoose"
 import router from "./router"
-import "./instrumentation.ts"
+// removing this for now -- takes too long to
+// init and doesn't do anything rn x_x
+// import "./instrumentation.ts"
 
 dotenv.config()
 

@@ -14,19 +14,19 @@ export default async function connectToMongo() {
         // const newUser = new User({
         //     name: "John Doe",
         //     email: "forgotAboutDatDoe@test.com",
+        //     passwordHash: "encryptDeez",
         // })
-        // console.log(newUser.name)
 
-        // await User.findByEmail("forgotAboutDatDoe@test.com").then((user) => {
-        //     if (user) {
-        //         console.log(user.getGreeting())
-        //     } else {
-        //         newUser.save().then(() => {
-        //             console.log(`Saved User: ${newUser.name}`)
-        //             mongoose.disconnect()
-        //         })
-        //     }
-        // })
+        // const foundUser = await User.findByEmail("forgotAboutDatDoe@test.com")
+        // if (foundUser) {
+        //     const isValid = await foundUser.comparePasswordHash("encryptDeez")
+        //     if (isValid) console.log(foundUser.getGreeting())
+        // } else {
+        //     newUser.save().then(() => {
+        //         console.log(`Saved User: ${newUser.name}`)
+        //         mongoose.disconnect()
+        //     })
+        // }
     } catch (error) {
         console.error("MongoDB connection error:", error)
     }
