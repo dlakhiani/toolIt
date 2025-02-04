@@ -3,9 +3,7 @@ import { OpenAI } from "openai"
 import dotenv from "dotenv"
 import { promptUnknownProblem } from "../services/vehicle.service.ts"
 import { MarkdownService } from "../services/markdown.service.ts"
-import { formatresponseService } from "../services/format.response.service.ts"
-import path from "path"
-import { readFile } from "fs/promises"
+import { formatResponseService } from "../services/format.response.service.ts"
 
 dotenv.config()
 
@@ -39,11 +37,9 @@ export async function diagnose(req: Request, res: Response) {
         // })
         // actual output of the ai
         //const diagnosis = completion.choices[0].message?.content
+        const markdownDiagnosis = await MarkdownService.readMockMarkdownFile()
 
-        const mockFilePath = path.resolve("./server/mocks/mockResponse.md")
-        const markdownDiagnosis = await readFile(mockFilePath, "utf-8")
-
-        const diagnosis = formatresponseService.parseDiagnosis(markdownDiagnosis)
+        const diagnosis = formatResponseService.parseDiagnosis(markdownDiagnosis)
 
         const savedFilePath = await MarkdownService.saveMarkdownFile(JSON.stringify(diagnosis, null, 2))
         //actual ai output
