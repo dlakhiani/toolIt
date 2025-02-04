@@ -8,7 +8,7 @@ export class MarkdownService {
     public static async saveMarkdownFile(content: string): Promise<string> {
         const now = new Date()
         const formattedTimestamp = now.toISOString().replace(/[:T]/g, "-").split(".")[0]
-        const fileName = `diagnosis-${formattedTimestamp}.md`
+        const fileName = `diagnosis-${formattedTimestamp}.json`
         const filePath = path.join(this.folderPath, fileName)
 
         await writeFile(filePath, content)

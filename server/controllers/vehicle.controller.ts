@@ -3,6 +3,7 @@ import { OpenAI } from "openai"
 import dotenv from "dotenv"
 import { promptUnknownProblem } from "../services/vehicle.service.ts"
 import { MarkdownService } from "../services/markdown.service.ts"
+import { formatresponseService } from "../services/format.response.service.ts"
 import path from "path"
 import { readFile } from "fs/promises"
 
@@ -42,13 +43,13 @@ export async function diagnose(req: Request, res: Response) {
         const mockFilePath = path.resolve("./server/mocks/mockResponse.md")
         const markdownDiagnosis = await readFile(mockFilePath, "utf-8")
 
-        const diagnosis = await MarkdownService.saveMarkdownFile(markdownDiagnosis)
+        const diagnosis = formatresponseService.parseDiagnosis(markdownDiagnosis)
+
+        const savedFilePath = await MarkdownService.saveMarkdownFile(JSON.stringify(diagnosis, null, 2))
         //actual ai output
         //res.json({ diagnosis })
-        res.json({ message: "Markdown file sent", diagnosis })
+        res.json({ message: "Markdown file sent", diagnosis, savedFilePath })
     } catch (error) {
-        console.error("Error:", error)
-        res.status(500).json({ error: "Failed to get diagnosis" })
         console.error("Error:", error)
         res.status(500).json({ error: "Failed to get diagnosis" })
     }
