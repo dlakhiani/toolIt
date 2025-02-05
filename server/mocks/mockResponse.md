@@ -9,8 +9,7 @@ Certainly! Let's dive into the issue of the busted brake pedal on your 2018 Toyo
 
 ### 1. Potential Causes:
 
--**Mechanical Failure**: The brake pedal assembly may have broken, bent, or detached from the mounting points.
-
+- **Mechanical Failure**: The brake pedal assembly may have broken, bent, or detached from the mounting points.
 - **Hydraulic System Issues**: Problems with the brake booster or master cylinder could affect pedal feel and function.
 - **Cable or Linkage Problems**: If your Corolla has a cable-operated brake system, the cable could be frayed or have disconnected.
 - **Faulty Brake switch**: The brake light switch may be malfunctioning, making it feel as though the pedal is compromised.
@@ -36,7 +35,8 @@ Certainly! Let's dive into the issue of the busted brake pedal on your 2018 Toyo
 ### 4. Estimated Cost Range for Repairs:
 
 - **Brake Pedal Assembly Replacement**: $100 - $250 (including labor).
-- **Master Cylinder Replacement**: $300 - $500 (including labor). -**Brake Line Repair**: $150 - $400 (depending on extent of repair).
+- **Master Cylinder Replacement**: $300 - $500 (including labor).
+- **Brake Line Repair**: $150 - $400 (depending on extent of repair).
 - **Brake Light Switch Replacement**: $50 - $150 (including labor).
 
 ### 5. Whether This is Safe to Drive With:
@@ -48,6 +48,10 @@ If the brake pedal is completely non-functional or if there's a significant loss
 
 **Immediate attention is required if the brake pedal appears to be broken or if there are signs of a hydraulic failure.**
 Brakes are essential for safe vehicle operation, and any issues with them should be addressed before attempting to drive the
-vehicle again. ### Conclusion: This situation requires thorough inspection and possibly immediate repairs. If you're not
+vehicle again.
+
+### Conclusion:
+
+This situation requires thorough inspection and possibly immediate repairs. If you're not
 comfortable diagnosing or fixing it yourself, I recommend taking the vehicle to a professional mechanic for a comprehensive
 assessment.

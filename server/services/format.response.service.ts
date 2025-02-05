@@ -1,8 +1,7 @@
 export class formatResponseService {
     public static parseDiagnosis(response: string): Record<string, any> {
         try {
-            // Remove duplicate content, if any
-            const uniqueResponse = [...new Set(response.split("\n"))].join("\n")
+            const uniqueResponse = [...new Set(response.split("\n").map((line) => line.trim()))].join("\n")
 
             const parsedDiagnosis: Record<string, any> = {
                 vehicle: "",
@@ -32,27 +31,56 @@ export class formatResponseService {
                 },
                 "Potential Causes": (lines) => {
                     parsedDiagnosis.potentialCauses = lines
-                        .filter((line) => line.startsWith("-"))
+                        .filter((line) => {
+                            return (
+                                line.trim() !== "" &&
+                                !line.toLowerCase().includes("potential causes") &&
+                                line.startsWith("-")
+                            )
+                        })
                         .map((line) => line.replace(/^- \*\*(.*?)\*\*: /, "").trim())
                 },
                 "Recommended Diagnostic Steps": (lines) => {
                     parsedDiagnosis.recommendedFixes = lines
-                        .filter((line) => line.startsWith("-") || line.match(/^\d+\./))
+                        .filter((line) => {
+                            return (
+                                line.trim() !== "" &&
+                                !line.toLowerCase().includes("recommended diagnostic steps") &&
+                                (line.startsWith("-") || line.match(/^\d+\./))
+                            )
+                        })
                         .map((line) =>
                             line
-                                .replace(/^\d+\.\s/, "")
-                                .replace(/^- /, "")
+                                .replace(/^\d+\.\s*/, "")
+                                .replace(/\*\*(.*?)\*\*:\s*/, "")
                                 .trim()
                         )
                 },
                 "Estimated Cost Range for Repairs": (lines) => {
                     parsedDiagnosis.estimatedCost = lines
-                        .filter((line) => line.includes("$"))
-                        .join(" ")
-                        .trim()
+                        .filter((line) => {
+                            return (
+                                line.trim() !== "" && !line.toLowerCase().includes("estimated cost range for repairs")
+                            )
+                        })
+                        .map((line) => line.replace(/\*/g, "").trim())
                 },
                 "Whether This is Safe to Drive With": (lines) => {
-                    parsedDiagnosis.safetyInfo = lines.join(" ").trim()
+                    const safetyInfoList = lines
+                        .filter((line) => {
+                            return (
+                                line.trim() !== "" && !line.toLowerCase().includes("whether this is safe to drive with")
+                            )
+                        })
+                        .map((line) => {
+                            const titleMatch = line.match(/\*\*(.*?)\*\*/)
+                            const explanation = line.replace(/\*\*(.*?)\*\*/, "").trim()
+
+                            return titleMatch ? { [titleMatch[1].trim()]: explanation } : null
+                        })
+                        .filter((entry) => entry !== null)
+
+                    parsedDiagnosis.safetyInfo = safetyInfoList
                 },
             }
 
