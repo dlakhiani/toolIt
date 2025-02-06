@@ -1,0 +1,30 @@
+{
+  "vehicle": "2018 Toyota Corolla",
+  "problem": "busted brake pedal",
+  "potentialCauses": [
+    "The brake pedal assembly may have broken, bent, or detached from the mounting points.",
+    "Problems with the brake booster or master cylinder could affect pedal feel and function.",
+    "If your Corolla has a cable-operated brake system, the cable could be frayed or have disconnected.",
+    "The brake light switch may be malfunctioning, making it feel as though the pedal is compromised.",
+    "Normal wear, especially if the vehicle has been subjected to heavy use or adverse conditions, could"
+  ],
+  "recommendedFixes": [
+    "Check under the dash and around the pedal assembly for any visible signs of damage or disconnection.",
+    "Depress the brake pedal to identify if it feels soft or goes to the floor; this can indicate hydraulic issues.",
+    "Inspect the brake fluid reservoir. A low fluid level could mean a leak within the system.",
+    "Determine if the brake lights activate when the pedal is pressed, indicating the switch is functioning.",
+    "Look for any signs of leaks or damage in the brake lines.",
+    "If safe, a low-speed test can help assess pedal response and any associated issues."
+  ],
+  "estimatedCost": [
+    "- Brake Pedal Assembly Replacement: $100 - $250 (including labor).",
+    "- Master Cylinder Replacement: $300 - $500 (including labor).",
+    "- Brake Line Repair: $150 - $400 (depending on extent of repair).",
+    "- Brake Light Switch Replacement: $50 - $150 (including labor)."
+  ],
+  "safetyInfo": [
+    {
+      "it is not safe to drive": "the vehicle. Driving with compromised brakes can lead to severe accidents."
+    }
+  ]
+}
