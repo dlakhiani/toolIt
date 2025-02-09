@@ -1,9 +1,9 @@
 export class formatResponseService {
-    public static parseDiagnosis(response: string): Record<string, any> {
+    public static parseDiagnosis(response: string): Record<string, unknown> {
         try {
             const uniqueResponse = [...new Set(response.split("\n").map((line) => line.trim()))].join("\n")
 
-            const parsedDiagnosis: Record<string, any> = {
+            const parsedDiagnosis: Record<string, unknown> = {
                 vehicle: "",
                 problem: "",
                 potentialCauses: [],
@@ -22,7 +22,7 @@ export class formatResponseService {
 
             // Use a map to associate titles with parsing logic
             const parsers: Record<string, (lines: string[], section: string) => void> = {
-                Vehicle: (lines, section) => {
+                Vehicle: (_, section) => {
                     const vehicleMatch = section.match(/\*\*Vehicle\*\*:\s*(.+)/)
                     if (vehicleMatch) parsedDiagnosis.vehicle = vehicleMatch[1].trim()
 

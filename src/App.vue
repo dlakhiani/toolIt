@@ -9,7 +9,7 @@
                         <router-link to="/logIn">Log In Page</router-link>
                     </li>
                     <li>
-                        <router-link to="/info">Car Info</router-link>
+                        <router-link to="/info">Vehicle Info</router-link>
                     </li>
                     <li>
                         <router-link to="/prompt">Problem Prompt</router-link>
