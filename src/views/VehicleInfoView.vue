@@ -1,35 +1,32 @@
 <template>
-    <div class="car-info-page">
-        <h1>Enter Car Information</h1>
+    <div class="vehicle-info-page">
+        <h1>Enter Vehicle Information</h1>
         <form
             @submit.prevent="goToPromptPage"
             class="car-info-form"
         >
             <div class="form-group">
-                <label for="carMake">Car Make:</label>
+                <label for="make">Make:</label>
                 <input
-                    id="carMake"
-                    v-model="carMake"
+                    v-model="vehicle.make"
                     type="text"
                     placeholder="e.g., Toyota"
                     required
                 />
             </div>
             <div class="form-group">
-                <label for="carModel">Car Model:</label>
+                <label for="model">Model:</label>
                 <input
-                    id="carModel"
-                    v-model="carModel"
+                    v-model="vehicle.model"
                     type="text"
                     placeholder="e.g., Camry"
                     required
                 />
             </div>
             <div class="form-group">
-                <label for="carYear">Year:</label>
+                <label for="year">Year:</label>
                 <input
-                    id="carYear"
-                    v-model="carYear"
+                    v-model="vehicle.year"
                     type="number"
                     placeholder="e.g., 2018"
                     required
@@ -46,29 +43,26 @@
 </template>
 
 <script lang="ts">
+    import { vehicleStore } from "@/stores/vehicle.store"
+    import { mapState } from "pinia"
     import { defineComponent } from "vue"
+
     export default defineComponent({
-        name: "CarInfoView",
-        data() {
-            return {
-                carMake: "",
-                carModel: "",
-                carYear: 0,
-            }
+        name: "VehicleInfoView",
+        computed: {
+            ...mapState(vehicleStore, ["vehicle"]),
+            isValid() {
+                return this.vehicle.make && this.vehicle.model && this.vehicle.year
+            },
         },
         methods: {
             goToPromptPage() {
-                if (!this.carMake || !this.carModel || !this.carYear) {
+                if (!this.isValid) {
                     alert("Please fill in all fields")
                     return
                 }
                 this.$router.push({
                     name: "prompt",
-                    query: {
-                        carMake: this.carMake,
-                        carModel: this.carModel,
-                        carYear: this.carYear,
-                    },
                 })
             },
         },
@@ -76,7 +70,7 @@
 </script>
 
 <style scoped>
-    .car-info-page {
+    .vehicle-info-page {
         max-width: 600px;
         margin: 0 auto;
         padding: 20px;
