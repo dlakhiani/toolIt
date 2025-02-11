@@ -30,12 +30,73 @@
                 type="submit"
                 class="submit-button"
             >
-                Login
+                Sign In
             </button>
         </form>
         <div class="error-message"></div>
     </div>
 </template>
+<script lang="ts">
+    import { defineComponent } from "vue"
+    import emailjs from "@emailjs/browser"
+
+    export default defineComponent({
+        name: "SignInView",
+        data() {
+            return {
+                name: "",
+                email: "",
+                password: "",
+                errorMessage: "",
+            }
+        },
+        methods: {
+            async loginUser() {
+                if (!this.name || !this.email || !this.password) {
+                    this.errorMessage = "Please fill in all fields."
+                    return
+                }
+
+                try {
+                    //need to connect data to the backend and have it saved
+                    //only displays data on the console for now
+                    this.errorMessage = ""
+
+                    console.log("Login Data:", {
+                        name: this.name,
+                        email: this.email,
+                        password: this.password,
+                    })
+
+                    emailjs
+                        .send(
+                            "personal_handy_service",
+                            "contact_form_template",
+                            {
+                                user_name: this.name,
+                                user_email: this.email,
+                            },
+                            {
+                                publicKey: process.env.VITE_EMAIL_PUBLIC_KEY,
+                            }
+                        )
+                        .then(
+                            () => {
+                                console.log("email sent !")
+                            },
+                            (error) => {
+                                console.log("email failed: ", error.text)
+                            }
+                        )
+                    alert("Login successful!")
+                    this.$router.push("/prompt")
+                } catch (error) {
+                    this.errorMessage = "An unexpected error occurred. Please try again."
+                }
+            },
+        },
+    })
+</script>
 <style scoped>
     .login-page {
         max-width: 400px;

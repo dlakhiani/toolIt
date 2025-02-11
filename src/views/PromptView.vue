@@ -10,7 +10,6 @@
             <div class="form-group">
                 <label for="problem">Describe the Problem:</label>
                 <textarea
-                    id="problem"
                     v-model="problem"
                     placeholder="Describe what's happening with your car..."
                     required
@@ -37,6 +36,20 @@
             class="error-message"
         >
             {{ error }}
+        </div>
+        <div class="button-group">
+            <button
+                @click="goToView('/settings')"
+                class="nav-button"
+            >
+                Go to Settings
+            </button>
+            <button
+                @click="goToView('/about')"
+                class="nav-button"
+            >
+                About Page
+            </button>
         </div>
     </div>
 </template>
@@ -88,6 +101,9 @@
                     this.isLoading = false
                 }
             },
+            goToView(route: string) {
+                this.$router.push(route)
+            },
         },
     })
 </script>
@@ -118,5 +134,26 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         background-color: #f9f9f9;
+    }
+    .button-group {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .nav-button {
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        flex: 1;
+        margin: 0 5px;
+        font-size: 1rem;
+    }
+
+    .nav-button:hover {
+        background-color: #0056b3;
     }
 </style>
