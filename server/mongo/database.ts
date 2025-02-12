@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-// import { User } from "../models"
+// import { User, Vehicle } from "../models"
 
 export default async function connectToMongo() {
     try {
@@ -24,6 +24,30 @@ export default async function connectToMongo() {
         // } else {
         //     newUser.save().then(() => {
         //         console.log(`Saved User: ${newUser.name}`)
+        //         mongoose.disconnect()
+        //     })
+        // }
+
+        // TODO: clear after implementing vehicle flow from UI ... trust imma do it
+        // const newVehicle = new Vehicle({
+        //     make: "Toyota",
+        //     model: "Corolla",
+        //     year: 2019,
+        //     problems: [
+        //         {
+        //             title: "cold start",
+        //         },
+        //     ],
+        // })
+
+        // const foundVehicles = await Vehicle.findVehiclesByYear(2019)
+        // if (foundVehicles.length > 0) {
+        //     foundVehicles.forEach((vehicle) => {
+        //         console.log(vehicle.getProblems())
+        //     })
+        // } else {
+        //     newVehicle.save().then(() => {
+        //         console.log(`Saved Vehicle: ${newVehicle.make} ${newVehicle.model} (${newVehicle.year})`)
         //         mongoose.disconnect()
         //     })
         // }
