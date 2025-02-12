@@ -1,21 +1,36 @@
 import mongoose, { HydratedDocument, Model, Schema } from "mongoose"
 
-interface ProblemStats {
+interface IProblemStats {
     title: string
     userReports: number
     successRate: number
 }
 
+const problemStatsSchema = new Schema({
+    title: {
+        type: String,
+        required: [true, "Title is required"],
+    },
+    userReports: {
+        type: Number,
+        default: 0,
+    },
+    successRate: {
+        type: Number,
+        default: 0,
+    },
+})
+
 interface IVehicle {
     make: string
     model: string
     year: number
-    problems: ProblemStats[]
+    problems: IProblemStats[]
     lastUpdatedAt: Date
 }
 
 interface IVehicleMethods {
-    getProblems(): ProblemStats[]
+    getProblems(): IProblemStats[]
 }
 
 interface IVehicleModel extends Model<IVehicle, IVehicleMethods> {
@@ -38,22 +53,7 @@ const vehicleSchema = new Schema(
             type: Number,
             required: [true, "Year is required"],
         },
-        problems: [
-            {
-                title: {
-                    type: String,
-                    required: [true, "Title is required"],
-                },
-                userReports: {
-                    type: Number,
-                    default: 0,
-                },
-                successRate: {
-                    type: Number,
-                    default: 0,
-                },
-            },
-        ],
+        problems: [problemStatsSchema],
     },
     {
         // adds createdAt and updatedAt timestamps
@@ -62,7 +62,7 @@ const vehicleSchema = new Schema(
 )
 
 // instance methods
-vehicleSchema.method("getProblems", function getProblems(): ProblemStats[] {
+vehicleSchema.method("getProblems", function getProblems(): IProblemStats[] {
     return this.problems
 })
 
