@@ -1,19 +1,21 @@
 import { Request, Response } from "express"
-import { OpenAI } from "openai"
+// import { OpenAI } from "openai"
 import dotenv from "dotenv"
-import { promptUnknownProblem } from "../services/vehicle.service.ts"
+// import { promptUnknownProblem } from "../services/vehicle.service.ts"
 import { MarkdownService } from "../services/markdown.service.ts"
 import { formatResponseService } from "../services/format.response.service.ts"
+import { Vehicle } from "../../interfaces/vehicle.interface.ts"
 
 dotenv.config()
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-})
+// const openai = new OpenAI({
+//     apiKey: process.env.OPENAI_API_KEY,
+// })
 
 export async function diagnose(req: Request, res: Response) {
     try {
-        const { make, model, year, problem } = req.body
+        const vehicle: Vehicle = req.body
+        console.log(vehicle)
 
         // const prompt: string = promptUnknownProblem({
         //     make,

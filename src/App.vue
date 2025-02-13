@@ -6,19 +6,10 @@
             <nav class="nav-bar">
                 <ul>
                     <li>
-                        <router-link to="/signIn">Sign In Page</router-link>
-                    </li>
-                    <li>
-                        <router-link to="/signUp">Sign Up Page</router-link>
-                    </li>
-                    <li>
-                        <router-link to="/info">Car Info</router-link>
+                        <router-link to="/info">Vehicle Info</router-link>
                     </li>
                     <li>
                         <router-link to="/prompt">Problem Prompt</router-link>
-                    </li>
-                    <li>
-                        <router-link to="/about">About Page</router-link>
                     </li>
                     <li>
                         <router-link to="/settings">Settings Page</router-link>

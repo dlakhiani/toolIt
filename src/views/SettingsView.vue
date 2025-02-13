@@ -2,54 +2,61 @@
     <div class="settings-page">
         <h1>Settings</h1>
         <p>Manage your preferences and account information with ease.</p>
+
+        <!-- Tab Buttons -->
         <div class="button-group">
             <button
-                v-for="(tab, index) in tabs"
-                :key="index"
-                @click="activeTab = index"
-                :class="['button', activeTab === index ? 'active' : '']"
+                v-for="(tabName, key) in tabs"
+                :key="key"
+                @click="activeTab = key"
+                :class="['button', activeTab === key ? 'active' : '']"
             >
-                {{ tab }}
+                {{ tabName }}
             </button>
         </div>
+
         <div class="tab-content">
-            <div v-if="activeTab === 0">
-                <h2>Profile</h2>
-                <p>HAVE USERS INFO HERE</p>
-            </div>
-            <div v-else-if="activeTab === 1">
-                <h2>Car Info</h2>
-                <p>Have cars info here</p>
-            </div>
-            <div v-else-if="activeTab === 2">
-                <h2>Updates</h2>
-                <p>Show possible issues coming for the car (e.g., brakes need to be changed).</p>
-            </div>
-            <div v-else-if="activeTab === 3">
-                <h2>Display</h2>
-                <p>Adjust display settings, including themes and layouts.</p>
-            </div>
-            <div v-else-if="activeTab === 4">
-                <h2>Help</h2>
-                <p>Access FAQs, support contact information, and documentation.</p>
-            </div>
+            <component :is="activeComponent"></component>
         </div>
     </div>
 </template>
 
 <script>
+    import ProfileTab from "@/components/settings/ProfileTab.vue"
+    import UpdatesTab from "@/components/settings/UpdatesTab.vue"
+    import DisplayTab from "@/components/settings/DisplayTab.vue"
+    import CarInfoTab from "@/components/settings/CarInfoTab.vue"
+    import AboutView from "@/views/AboutView.vue"
+
     export default {
         data() {
             return {
-                tabs: ["Profile", "Car Info", "Updates", "Display", "Help"],
-                activeTab: 0, // Default tab
+                tabs: {
+                    profile: "Profile",
+                    carInfo: "Car Info",
+                    updates: "Updates",
+                    display: "Display",
+                    help: "Help",
+                },
+                activeTab: "profile",
             }
+        },
+        computed: {
+            activeComponent() {
+                const components = {
+                    profile: ProfileTab,
+                    carInfo: CarInfoTab,
+                    updates: UpdatesTab,
+                    display: DisplayTab,
+                    help: AboutView,
+                }
+                return components[this.activeTab]
+            },
         },
     }
 </script>
 
 <style scoped>
-    /* General Page Styling */
     .settings-page {
         max-width: 600px;
         margin: 0 auto;
@@ -60,20 +67,17 @@
         background-color: #f9f9f9;
     }
 
-    /* Heading */
     h1 {
         font-size: 1.8rem;
         margin-bottom: 20px;
     }
 
-    /* Subtext */
     p {
         font-size: 1rem;
         color: #555;
         margin-bottom: 20px;
     }
 
-    /* Button Group Styling */
     .button-group {
         display: flex;
         justify-content: space-between;

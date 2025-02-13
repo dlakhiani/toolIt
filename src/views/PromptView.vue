@@ -1,7 +1,7 @@
 <template>
     <div class="problem-prompt-page">
         <h1>Describe the Problem</h1>
-        <p><strong>Car Info:</strong> {{ carMake }} {{ carModel }} ({{ carYear }})</p>
+        <p><strong>Vehicle Info:</strong> {{ vehicle.make }} {{ vehicle.model }} ({{ vehicle.year }})</p>
 
         <form
             @submit.prevent="getDiagnosis"
@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label for="problem">Describe the Problem:</label>
                 <textarea
-                    v-model="problem"
+                    v-model="vehicle.problem"
                     placeholder="Describe what's happening with your car..."
                     required
                 ></textarea>
@@ -56,31 +56,24 @@
 
 <script lang="ts">
     import { defineComponent } from "vue"
-    import { getVehicleDiagnostic } from "@/components/vehicleDiagnostic.ts"
+    import { vehicleStore } from "@/stores/vehicle.store"
+    import { mapActions, mapState } from "pinia"
 
     export default defineComponent({
         name: "PromptView",
         data() {
             return {
-                carMake: "",
-                carModel: "",
-                carYear: 0,
-                problem: "",
-                diagnosis: "",
                 error: "",
                 isLoading: false,
             }
         },
-        mounted() {
-            const { carMake = "", carModel = "", carYear = 0 } = this.$route.query
-            // I still hate how this looks but we ball keep having type issuing with carYear
-            this.carMake = typeof carMake === "string" ? carMake : ""
-            this.carModel = typeof carModel === "string" ? carModel : ""
-            this.carYear = !isNaN(Number(carYear)) ? Number(carYear) : 0
+        computed: {
+            ...mapState(vehicleStore, ["vehicle", "diagnosis"]),
         },
         methods: {
+            ...mapActions(vehicleStore, ["loadDiagnosis"]),
             async getDiagnosis() {
-                if (!this.problem) {
+                if (!this.vehicle.problem) {
                     this.error = "Please describe the problem"
                     return
                 }
@@ -88,13 +81,7 @@
                 try {
                     this.isLoading = true
                     this.error = ""
-                    //this.carYear keeps having data type issues, why as number was added
-                    this.diagnosis = await getVehicleDiagnostic(
-                        this.carMake,
-                        this.carModel,
-                        this.carYear as number,
-                        this.problem
-                    )
+                    await this.loadDiagnosis()
                 } catch (err) {
                     this.error = "Failed to get diagnosis. Please try again."
                 } finally {

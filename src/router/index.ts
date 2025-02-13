@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router"
 import PromptView from "../views/PromptView.vue"
 import AboutView from "../views/AboutView.vue"
-import CarInfoView from "../views/CarInfoView.vue"
 import SettingsView from "@/views/SettingsView.vue"
 import SignUpView from "@/views/SignUpView.vue"
 import SignInView from "@/views/SignInView.vue"
 import WelcomeView from "@/views/WelcomeView.vue"
+import VehicleInfoView from "../views/VehicleInfoView.vue"
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -22,7 +22,7 @@ const router = createRouter({
         {
             path: "/info",
             name: "info",
-            component: CarInfoView,
+            component: VehicleInfoView,
         },
         {
             path: "/signIn",
