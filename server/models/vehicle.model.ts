@@ -1,36 +1,16 @@
-import mongoose, { HydratedDocument, Model, Schema } from "mongoose"
-
-interface IProblemStats {
-    title: string
-    userReports: number
-    successRate: number
-}
-
-const problemStatsSchema = new Schema({
-    title: {
-        type: String,
-        required: [true, "Title is required"],
-    },
-    userReports: {
-        type: Number,
-        default: 0,
-    },
-    successRate: {
-        type: Number,
-        default: 0,
-    },
-})
+import mongoose, { HydratedDocument, Model, Types, Schema } from "mongoose"
+import { IProblem } from "./problem.model"
 
 interface IVehicle {
     make: string
     model: string
     year: number
-    problems: IProblemStats[]
+    problems: Types.ObjectId[]
     lastUpdatedAt: Date
 }
 
 interface IVehicleMethods {
-    getProblems(): IProblemStats[]
+    getProblems(): Promise<IProblem[]>
 }
 
 interface IVehicleModel extends Model<IVehicle, IVehicleMethods> {
@@ -53,7 +33,16 @@ const vehicleSchema = new Schema(
             type: Number,
             required: [true, "Year is required"],
         },
-        problems: [problemStatsSchema],
+        problems: [
+            {
+                type: Types.ObjectId,
+                ref: "problem",
+                default: [],
+            },
+        ],
+        lastUpdatedAt: {
+            type: Date,
+        },
     },
     {
         // adds createdAt and updatedAt timestamps
@@ -62,8 +51,8 @@ const vehicleSchema = new Schema(
 )
 
 // instance methods
-vehicleSchema.method("getProblems", function getProblems(): IProblemStats[] {
-    return this.problems
+vehicleSchema.method("getProblems", async function getProblems(): Promise<IProblem[]> {
+    return await this.populate("problems").then((vehicle) => vehicle.problems as IProblem[])
 })
 
 // static methods
