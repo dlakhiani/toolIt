@@ -10,7 +10,7 @@
             <div class="form-group">
                 <label for="problem">Describe the Problem:</label>
                 <textarea
-                    v-model="vehicle.problem"
+                    v-model="problem"
                     placeholder="Describe what's happening with your car..."
                     required
                 ></textarea>
@@ -43,7 +43,7 @@
 <script lang="ts">
     import { defineComponent } from "vue"
     import { vehicleStore } from "@/stores/vehicle.store"
-    import { mapActions, mapState } from "pinia"
+    import { mapActions, mapState, mapWritableState } from "pinia"
 
     export default defineComponent({
         name: "PromptView",
@@ -55,11 +55,12 @@
         },
         computed: {
             ...mapState(vehicleStore, ["vehicle", "diagnosis"]),
+            ...mapWritableState(vehicleStore, ["problem"]),
         },
         methods: {
             ...mapActions(vehicleStore, ["loadDiagnosis"]),
             async getDiagnosis() {
-                if (!this.vehicle.problem) {
+                if (!this.problem) {
                     this.error = "Please describe the problem"
                     return
                 }
