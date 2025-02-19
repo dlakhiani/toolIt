@@ -18,6 +18,15 @@
         <div class="tab-content">
             <component :is="activeComponent"></component>
         </div>
+        <button
+            class="prompt-button"
+            @click="goToView('/prompt')"
+        >
+            <img
+                src="@/assets/icons/mechy.png"
+                alt="Prompt"
+            />
+        </button>
     </div>
 </template>
 
@@ -25,7 +34,7 @@
     import ProfileTab from "@/components/settings/ProfileTab.vue"
     import UpdatesTab from "@/components/settings/UpdatesTab.vue"
     import DisplayTab from "@/components/settings/DisplayTab.vue"
-    import CarInfoTab from "@/components/settings/CarInfoTab.vue"
+    import CarInfoTab from "@/views/VehicleInfoView.vue"
     import AboutView from "@/views/AboutView.vue"
 
     export default {
@@ -51,6 +60,11 @@
                     help: AboutView,
                 }
                 return components[this.activeTab]
+            },
+        },
+        methods: {
+            goToView(route) {
+                this.$router.push(route)
             },
         },
     }
@@ -122,5 +136,19 @@
     p {
         font-size: 1rem;
         color: #333;
+    }
+    .prompt-button {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        border: none;
+        border-radius: 50%;
+        width: 55px;
+        height: 55px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>

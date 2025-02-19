@@ -2,13 +2,13 @@
     "compilerOptions": {
         "target": "ES2020",
         "useDefineForClassFields": true,
-        "module": "NodeNext",
+        "module": "ESNext", //I changed dis
         "lib": ["ES2020", "DOM", "DOM.Iterable"],
         "skipLibCheck": true,
         "allowSyntheticDefaultImports": true,
 
         /* Bundler mode */
-        "moduleResolution": "nodenext",
+        "moduleResolution": "bundler", //I changed dis too
         "allowImportingTsExtensions": true,
         "resolveJsonModule": true,
         "isolatedModules": true,
