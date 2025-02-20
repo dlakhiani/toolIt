@@ -32,15 +32,12 @@
                     Prompts
                 </h3>
                 <button class="quick-button">
-                    <i class="fas fa-exclamation-circle"></i>
                     <span v-if="!isCollapsed"> I have an engine light</span>
                 </button>
                 <button class="quick-button">
-                    <i class="fas fa-info-circle"></i>
                     <span v-if="!isCollapsed"> Status and Recommendations</span>
                 </button>
                 <button class="quick-button">
-                    <i class="fas fa-heart"></i>
                     <span v-if="!isCollapsed"> I miss you</span>
                 </button>
             </nav>
@@ -49,7 +46,6 @@
                 class="sidebar-settings-button"
                 @click="goToView('/settings')"
             >
-                <i class="fas fa-cog"></i>
                 <span v-if="!isCollapsed"> Settings</span>
             </button>
         </aside>
@@ -96,7 +92,7 @@
         name: "PromptView",
         data() {
             return {
-                isCollapsed: false, // Sidebar starts expanded
+                isCollapsed: false,
             }
         },
         computed: {
@@ -136,13 +132,11 @@
         position: relative;
     }
 
-    /* Collapsed Sidebar */
     .sidebar.collapsed {
         width: 80px;
         padding: 20px 10px;
     }
 
-    /* Settings Button (Placed at Bottom of Sidebar) */
     .sidebar-settings-button {
         position: absolute;
         bottom: 20px;
@@ -164,12 +158,10 @@
         gap: 10px;
     }
 
-    /* When Sidebar is Collapsed, Show Only Icon */
     .sidebar.collapsed .sidebar-settings-button span {
         display: none;
     }
 
-    /* Hover Effect */
     .sidebar-settings-button:hover {
         background-color: #4b5563;
     }
@@ -189,11 +181,10 @@
         transition: transform 0.2s ease;
     }
 
-    /* Optional: Add Hover Effect */
     .toggle-sidebar:hover {
         transform: scale(1.1); /* Slight zoom-in effect */
     }
-    /* Vehicle Info */
+
     .vehicle-info {
         text-align: center;
         margin-bottom: 20px;
@@ -211,7 +202,6 @@
         font-weight: bold;
     }
 
-    /* Quick Actions */
     .quick-actions {
         display: flex;
         flex-direction: column;
@@ -248,8 +238,8 @@
         flex-direction: column;
         align-items: center;
         padding: 40px;
-        max-width: 1000px; /* Increase max width */
-        width: 100%; /* Allow it to grow */
+        max-width: 1000px;
+        width: 100%;
         margin: 0 auto;
         transition: width 0.3s ease;
     }
@@ -263,10 +253,9 @@
     }
 
     /* Chat Window */
-    /* Chat Window - Expands More */
     .chat-window {
-        width: 90%; /* Make it wider */
-        height: 80vh; /* Increase height */
+        width: 90%;
+        height: 80vh;
         background-color: white;
         padding: 20px;
         border-radius: 12px;
@@ -276,10 +265,9 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
-        gap: 10px; /* Space between messages */
+        gap: 10px;
     }
 
-    /* AI Message Styling */
     .ai-message {
         display: flex;
         align-items: center;

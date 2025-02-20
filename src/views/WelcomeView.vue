@@ -117,7 +117,7 @@
         name: "welcome",
         data() {
             return {
-                activeTab: "signin", // Default view is Sign In
+                activeTab: "signin",
                 name: "",
                 email: "",
                 password: "",

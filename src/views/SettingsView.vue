@@ -15,9 +15,13 @@
             </button>
         </div>
 
+        <!-- Locked Height for Consistent Tab Size -->
         <div class="tab-content">
-            <component :is="activeComponent"></component>
+            <div class="tab-container">
+                <component :is="activeComponent"></component>
+            </div>
         </div>
+
         <button
             class="prompt-button"
             @click="goToView('/prompt')"
@@ -71,19 +75,34 @@
 </script>
 
 <style scoped>
+    /* Settings Page - Fixed Layout */
     .settings-page {
-        max-width: 600px;
-        margin: 0 auto;
+        height: 600px;
+        width: 600px;
+        margin: 50px auto 0 auto;
         padding: 20px;
         text-align: center;
         border: 1px solid #ccc;
         border-radius: 8px;
         background-color: #f9f9f9;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
+    .tab-content {
+        flex-grow: 5;
+        height: 400px;
+        overflow-y: auto;
+        width: 100%;
+        text-align: left;
+        margin-top: 20px;
+    }
+
+    /* Header */
     h1 {
         font-size: 1.8rem;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     p {
@@ -92,10 +111,11 @@
         margin-bottom: 20px;
     }
 
+    /* Button Group */
     .button-group {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     .button {
@@ -104,7 +124,6 @@
         padding: 10px 15px;
         background-color: #007bff;
         color: white;
-        text-decoration: none;
         border: none;
         border-radius: 5px;
         cursor: pointer;
@@ -122,21 +141,6 @@
         background-color: #0056b3;
     }
 
-    /* Tab Content */
-    .tab-content {
-        text-align: left;
-        margin-top: 20px;
-    }
-
-    h2 {
-        font-size: 1.5rem;
-        margin-bottom: 10px;
-    }
-
-    p {
-        font-size: 1rem;
-        color: #333;
-    }
     .prompt-button {
         position: fixed;
         bottom: 20px;
