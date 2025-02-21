@@ -1,9 +1,9 @@
 import { Vehicle } from "../../interfaces/vehicle.interface.ts"
 
-export function promptUnknownProblem(vehicle: Vehicle): string {
+export function promptUnknownProblem(vehicle: Vehicle, problem: string): string {
     return `As an automotive expert, please diagnose this car problem and provide a solution:
         Car: ${vehicle.year} ${vehicle.make} ${vehicle.model}
-        Problem: ${vehicle.problem}
+        Problem: ${problem}
         
         Please provide:
         1. Potential causes

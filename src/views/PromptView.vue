@@ -69,6 +69,7 @@
 
             <form class="problem-form">
                 <textarea
+                    v-model="problem"
                     placeholder="Type a message..."
                     required
                 ></textarea>
@@ -86,7 +87,7 @@
 <script lang="ts">
     import { defineComponent } from "vue"
     import { vehicleStore } from "@/stores/vehicle.store"
-    import { mapState } from "pinia"
+    import { mapState, mapWritableState } from "pinia"
 
     export default defineComponent({
         name: "PromptView",
@@ -96,7 +97,8 @@
             }
         },
         computed: {
-            ...mapState(vehicleStore, ["vehicle"]),
+            ...mapState(vehicleStore, ["vehicle", "diagnosis"]),
+            ...mapWritableState(vehicleStore, ["problem"]),
         },
         methods: {
             goToView(route: string) {

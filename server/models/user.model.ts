@@ -71,7 +71,7 @@ userSchema.method("comparePasswordHash", async function comparePasswordHash(pass
 })
 
 // static methods
-userSchema.static("findByEmail", function findByEmail(email: string) {
+userSchema.static("findByEmail", function findByEmail(email: string): Promise<HydratedDocument<IUser, IUserMethods>> {
     return this.findOne({ email })
 })
 
