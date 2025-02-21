@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router"
 import PromptView from "../views/PromptView.vue"
 import AboutView from "../views/AboutView.vue"
+import SettingsView from "@/views/SettingsView.vue"
+import WelcomeView from "@/views/WelcomeView.vue"
 import VehicleInfoView from "../views/VehicleInfoView.vue"
-import LogInView from "@/views/LogInView.vue"
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -22,9 +23,14 @@ const router = createRouter({
             component: VehicleInfoView,
         },
         {
-            path: "/logIn",
-            name: "logIn",
-            component: LogInView,
+            path: "/settings",
+            name: "settings",
+            component: SettingsView,
+        },
+        {
+            path: "/",
+            name: "welcome",
+            component: WelcomeView,
         },
     ],
 })

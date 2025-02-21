@@ -36,7 +36,7 @@
                 type="submit"
                 class="submit-button"
             >
-                Next
+                Enter
             </button>
         </form>
     </div>

@@ -1,14 +1,10 @@
 <template>
     <div class="login-page">
-        <h1>Login</h1>
-        <form
-            @submit.prevent="loginUser"
-            class="login-form"
-        >
+        <h1>Sign Up</h1>
+        <form class="login-form">
             <div class="form-group">
                 <label>Name:</label>
                 <input
-                    v-model="name"
                     type="text"
                     placeholder="Enter your name"
                     required
@@ -17,7 +13,6 @@
             <div class="form-group">
                 <label>Email:</label>
                 <input
-                    v-model="email"
                     type="email"
                     placeholder="Enter your email"
                     required
@@ -26,7 +21,6 @@
             <div class="form-group">
                 <label>Password:</label>
                 <input
-                    v-model="password"
                     type="password"
                     placeholder="Enter your password"
                     required
@@ -36,24 +30,18 @@
                 type="submit"
                 class="submit-button"
             >
-                Login
+                Sign Up
             </button>
         </form>
-        <div
-            v-if="errorMessage"
-            class="error-message"
-        >
-            {{ errorMessage }}
-        </div>
+        <div class="error-message"></div>
     </div>
 </template>
-
 <script lang="ts">
     import { defineComponent } from "vue"
     import emailjs from "@emailjs/browser"
 
     export default defineComponent({
-        name: "LoginView",
+        name: "SignUpView",
         data() {
             return {
                 name: "",
@@ -102,6 +90,7 @@
                         )
 
                     alert("Login successful!")
+                    this.$router.push("/info")
                 } catch (error) {
                     this.errorMessage = "An unexpected error occurred. Please try again."
                 }
@@ -109,7 +98,6 @@
         },
     })
 </script>
-
 <style scoped>
     .login-page {
         max-width: 400px;
