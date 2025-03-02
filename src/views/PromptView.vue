@@ -6,8 +6,18 @@
                 class="toggle-sidebar"
                 @click="toggleSidebar"
             >
-                <span v-if="isCollapsed">☰</span>
-                <span v-else>←</span>
+                <span v-if="isCollapsed"
+                    ><img
+                        src="@/assets/icons/borger.png"
+                        alt="borgor icon"
+                        class="borger-image"
+                /></span>
+                <span v-else
+                    ><img
+                        src="@/assets/icons/borger.png"
+                        alt="borgor icon"
+                        class="borger-image"
+                /></span>
             </button>
 
             <div
