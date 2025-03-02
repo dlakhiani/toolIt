@@ -10,17 +10,22 @@ import router from "./router"
 
 dotenv.config()
 
-await connectToMongo()
-
 const app = express()
+app.get("/", (_, res) => {
+    res.status(200).json({
+        status: "ayeaye",
+    })
+})
+
 app.use(express.json())
 app.use(cors())
 
 app.use("/api", router)
 
 const PORT = process.env.PORT || 3000
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`Server running on port ${PORT}`)
+    await connectToMongo()
 })
 
 async function shutdown(signal: string) {

@@ -72,7 +72,6 @@ export default async function connectToMongo() {
         if (foundProblem) console.log(foundProblem.getSteps())
     } catch (error) {
         console.error("MongoDB connection error:", error)
-    } finally {
-        mongoose.disconnect()
+        process.exit(1)
     }
 }
