@@ -34,6 +34,23 @@ docker compose build --no-cache
 docker compose watch
 ```
 
+> the `watch` parameter syncs any changes made on your local to the container, `up` fell off
+
 4. Health check:
     - Client: http://localhost:5173
     - Server: http://localhost:3000
+
+## Working with Docker
+
+The build process hooks into a few files:
+
+- `package*.json`
+- `tsconfig*.json`
+- `**/Dockerfile`
+- `compose.yml`
+
+After building, we can simply use `watch` to run and `stop` to suspend our cached container, saving **heaps** of time.
+
+_However_, if you were to update the build process below, it is recommended to `docker compose down` to clear any remnants prior to another `build` ...
+
+> Thus, unless changes were made to the above files, simply stop the containers with `docker compose stop`
