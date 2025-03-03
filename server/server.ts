@@ -11,6 +11,7 @@ import router from "./router"
 dotenv.config()
 
 const app = express()
+// server status check
 app.get("/", (_, res) => {
     res.status(200).json({
         status: "ayeaye",
