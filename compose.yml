@@ -1,0 +1,61 @@
+name: toolit
+
+services:
+    client:
+        build:
+            context: .
+            dockerfile: src/Dockerfile
+        restart: unless-stopped
+        env_file: ./.env
+        ports:
+            - 5173:5173
+        networks:
+            - toolit-net
+        develop:
+            watch:
+                - action: sync
+                  path: ./src
+                  target: /app/src
+                  ignore:
+                      - node_modules
+        command: >
+            sh -c "npm run dev -- --host"
+        depends_on:
+            - server
+
+    server:
+        build:
+            context: .
+            dockerfile: server/Dockerfile
+        restart: unless-stopped
+        env_file: ./.env
+        ports:
+            - 3000:3000
+        networks:
+            - toolit-net
+        develop:
+            watch:
+                - action: sync
+                  path: ./server
+                  target: /app/server
+                  ignore:
+                      - node_modules
+        command: >
+            sh -c "npm run start:tsx"
+        depends_on:
+            - database
+
+    database:
+        image: mongo:latest
+        volumes:
+            - mongo-db:/data/db
+        ports:
+            - 27017:27017 # should expose for local, but not prod
+        networks:
+            - toolit-net
+
+volumes:
+    mongo-db:
+networks:
+    toolit-net:
+        driver: bridge

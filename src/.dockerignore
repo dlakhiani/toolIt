@@ -1,0 +1,11 @@
+.github
+.gitignore
+.vscode
+node_modules
+build
+server
+.prettierrc
+compose.yml
+generate.session.secret.ts
+LICENSE
+README.md
