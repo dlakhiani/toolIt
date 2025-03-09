@@ -1,7 +1,7 @@
 import mongoose, { HydratedDocument, Model, Schema } from "mongoose"
 import { compare, genSalt, hash } from "bcrypt"
 
-interface IUser {
+interface IUser extends Document {
     name: string
     email: string
     passwordHash: string
@@ -14,11 +14,13 @@ interface IUserMethods {
     comparePasswordHash(passwordHash: string): Promise<boolean>
 }
 
+type HydratedUser = HydratedDocument<IUser, IUserMethods> | null
+
 interface IUserModel extends Model<IUser, IUserMethods> {
-    findByEmail(email: string): Promise<HydratedDocument<IUser, IUserMethods>>
+    findByEmail(email: string): Promise<HydratedUser>
 }
 
-const userSchema = new Schema(
+const userSchema = new Schema<IUser, IUserModel, IUserMethods>(
     {
         name: {
             type: String,
@@ -71,10 +73,11 @@ userSchema.method("comparePasswordHash", async function comparePasswordHash(pass
 })
 
 // static methods
-userSchema.static("findByEmail", function findByEmail(email: string): Promise<HydratedDocument<IUser, IUserMethods>> {
+userSchema.static("findByEmail", function findByEmail(email: string): Promise<HydratedUser> {
     return this.findOne({ email })
 })
 
 const User = mongoose.model<IUser, IUserModel>("user", userSchema)
 
+export { HydratedUser, IUser }
 export default User
