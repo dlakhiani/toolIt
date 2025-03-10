@@ -1,6 +1,14 @@
-import { Vehicle } from "../../interfaces/vehicle.interface.ts"
+import { TVehicle } from "../../interfaces"
+import { Vehicle } from "../models"
 
-export function promptUnknownProblem(vehicle: Vehicle, problem: string): string {
+export async function saveVehicle(vehicle: TVehicle) {
+    const vehicleData = new Vehicle(vehicle)
+    vehicleData.save()
+}
+
+export function promptUnknownProblem(vehicle: TVehicle, problem: string): string {
+    if (!vehicle) throw new Error("Prompt failed: Vehicle is empty")
+
     return `As an automotive expert, please diagnose this car problem and provide a solution:
         Car: ${vehicle.year} ${vehicle.make} ${vehicle.model}
         Problem: ${problem}

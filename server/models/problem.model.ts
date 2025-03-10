@@ -19,7 +19,7 @@ const problemStepsSchema = new Schema({
     toolsNeeded: [String],
 })
 
-export interface IProblem {
+interface IProblem {
     title: string
     symptoms: string[]
     steps: IProblemSteps[]
@@ -32,8 +32,10 @@ interface IProblemMethods {
     getSteps(): IProblemSteps[]
 }
 
+type HydratedProblem = HydratedDocument<IProblem, IProblemMethods> | null
+
 interface IProblemModel extends Model<IProblem, IProblemMethods> {
-    findProblemByTitle(title: string): Promise<HydratedDocument<IProblem, IProblemMethods>>
+    findProblemByTitle(title: string): Promise<HydratedProblem>
 }
 
 const problemSchema = new Schema(
@@ -69,12 +71,11 @@ problemSchema.method("getSteps", function getSteps(): IProblemSteps[] {
 })
 
 // static methods
-problemSchema.static("findProblemByTitle", function findProblemByTitle(title: string): Promise<
-    HydratedDocument<IProblem, IProblemMethods>
-> {
+problemSchema.static("findProblemByTitle", function findProblemByTitle(title: string): Promise<HydratedProblem> {
     return this.findOne({ title })
 })
 
 const Problem = mongoose.model<IProblem, IProblemModel>("problem", problemSchema)
 
+export { IProblem, IProblemSteps, HydratedProblem }
 export default Problem

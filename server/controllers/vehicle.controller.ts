@@ -1,10 +1,10 @@
 import { Request, Response } from "express"
 // import { OpenAI } from "openai"
 import dotenv from "dotenv"
-import { promptUnknownProblem } from "../services/vehicle.service.ts"
+import { promptUnknownProblem, saveVehicle } from "../services/vehicle.service.ts"
 import { MarkdownService } from "../services/markdown.service.ts"
 import { formatResponseService } from "../services/format.response.service.ts"
-import { Vehicle } from "../../interfaces/vehicle.interface.ts"
+import { TVehicle } from "../../interfaces"
 
 dotenv.config()
 
@@ -12,9 +12,26 @@ dotenv.config()
 //     apiKey: process.env.OPENAI_API_KEY,
 // })
 
+export async function addVehicle(req: Request, res: Response) {
+    try {
+        const vehicle: TVehicle = req.body.vehicle
+        if (!vehicle) {
+            res.status(404).json({
+                message: `No vehicle provided. Aborting save.`,
+            })
+            return
+        }
+
+        saveVehicle(vehicle)
+        res.json({ message: `Saved vehicle: ${vehicle.make} ${vehicle.model} (${vehicle.year})` })
+    } catch (error) {
+        res.status(500).json({ error: `Failed to add vehicle: ${error}` })
+    }
+}
+
 export async function diagnose(req: Request, res: Response) {
     try {
-        const vehicle: Vehicle = req.body.vehicle
+        const vehicle: TVehicle = req.body.vehicle
         const problem: string = req.body.problem
 
         const prompt: string = promptUnknownProblem(vehicle, problem)
@@ -44,7 +61,6 @@ export async function diagnose(req: Request, res: Response) {
         //res.json({ diagnosis })
         res.json({ message: "Markdown file sent", diagnosis, savedFilePath })
     } catch (error) {
-        console.error("Error:", error)
-        res.status(500).json({ error: "Failed to get diagnosis" })
+        res.status(500).json({ error: `Failed to get diagnosis: ${error}` })
     }
 }

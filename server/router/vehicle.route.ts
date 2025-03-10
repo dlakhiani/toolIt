@@ -1,7 +1,8 @@
 import { Router } from "express"
-import { diagnose } from "../controllers/vehicle.controller.ts"
+import { addVehicle, diagnose } from "../controllers/vehicle.controller.ts"
 
 const vehicleRouter = Router()
 vehicleRouter.post("/diagnose", diagnose)
+vehicleRouter.post("/add", addVehicle)
 
 export default vehicleRouter

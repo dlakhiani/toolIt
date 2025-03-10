@@ -1,11 +1,11 @@
 import { defineStore } from "pinia"
-import { Vehicle } from "../../interfaces/vehicle.interface.ts"
+import { TVehicle } from "@interfaces"
 import axios from "axios"
 
 export const vehicleStore = defineStore("vehicle", {
     state: () => {
         return {
-            vehicle: {} as Vehicle,
+            vehicle: {} as TVehicle,
             problem: "",
             diagnosis: "",
         }
