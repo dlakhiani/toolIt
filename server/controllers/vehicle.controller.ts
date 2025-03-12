@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 // import { OpenAI } from "openai"
 import dotenv from "dotenv"
-import { promptUnknownProblem, saveVehicle } from "../services/vehicle.service.ts"
+import { getVehiclesByYear, promptUnknownProblem, saveVehicle } from "../services/vehicle.service.ts"
 import { MarkdownService } from "../services/markdown.service.ts"
 import { formatResponseService } from "../services/format.response.service.ts"
 import { TVehicle } from "../../interfaces"
@@ -26,6 +26,35 @@ export async function addVehicle(req: Request, res: Response) {
         res.json({ message: `Saved vehicle: ${vehicle.make} ${vehicle.model} (${vehicle.year})` })
     } catch (error) {
         res.status(500).json({ error: `Failed to add vehicle: ${error}` })
+    }
+}
+
+export async function listVehiclesByYear(req: Request, res: Response) {
+    try {
+        const year: number = req.body.year
+        if (!year) {
+            res.status(404).json({
+                message: `No year provided`,
+            })
+            return
+        }
+
+        const vehiclesByYear = await getVehiclesByYear(year)
+        if (!vehiclesByYear) {
+            res.json({
+                message: `Failed to find vehicles in year '${year}'`,
+            })
+            return
+        }
+
+        res.json({
+            message: `Found ${vehiclesByYear?.length} vehicles`,
+            vehiclesByYear,
+        })
+    } catch (error) {
+        res.status(500).json({
+            error: `Found no vehicles: ${error}`,
+        })
     }
 }
 

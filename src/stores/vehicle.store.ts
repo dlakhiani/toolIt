@@ -13,7 +13,7 @@ export const vehicleStore = defineStore("vehicle", {
     actions: {
         async loadDiagnosis() {
             try {
-                const response = await axios.post("/api/diagnose", {
+                const response = await axios.post("/api/vehicle/diagnose", {
                     vehicle: this.vehicle,
                     problem: this.problem,
                 })
