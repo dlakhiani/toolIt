@@ -10,7 +10,8 @@
         "start": "npx nodemon server/server.ts",
         "start:tsx": "npx tsx watch server/server.ts",
         "start:new": "ts-node --esm server/server.ts",
-        "lint": "npx eslint . --ignore-pattern \"env.d.ts\""
+        "lint": "npx eslint . --ignore-pattern \"env.d.ts\"",
+        "build:css": "./node_modules/.bin/tailwindcss -i ./src/assets/main.css -o ./src/assets/output.css"
     },
     "dependencies": {
         "@emailjs/browser": "^4.4.1",
@@ -50,7 +51,7 @@
         "nodemon": "^3.0.1",
         "prettier": "^3.4.2",
         "prettier-eslint": "^16.3.0",
-        "tailwindcss": "^4.0.9",
+        "tailwindcss": "^4.0.13",
         "ts-node": "^10.9.2",
         "typescript": "^5.7.2",
         "typescript-eslint": "^8.18.2",
