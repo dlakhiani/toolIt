@@ -1,11 +1,11 @@
 import { defineStore } from "pinia"
-import { Vehicle } from "../../interfaces/vehicle.interface.ts"
+import { TVehicle } from "@interfaces"
 import axios from "axios"
 
 export const vehicleStore = defineStore("vehicle", {
     state: () => {
         return {
-            vehicle: {} as Vehicle,
+            vehicle: {} as TVehicle,
             problem: "",
             diagnosis: "",
         }
@@ -13,7 +13,7 @@ export const vehicleStore = defineStore("vehicle", {
     actions: {
         async loadDiagnosis() {
             try {
-                const response = await axios.post("/api/diagnose", {
+                const response = await axios.post("/api/vehicle/diagnose", {
                     vehicle: this.vehicle,
                     problem: this.problem,
                 })

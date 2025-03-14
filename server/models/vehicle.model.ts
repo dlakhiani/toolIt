@@ -1,5 +1,5 @@
 import mongoose, { HydratedDocument, Model, Types, Schema } from "mongoose"
-import { IProblem } from "./problem.model"
+import { IProblem } from "./problem.model.ts"
 
 interface IVehicle {
     make: string
@@ -13,8 +13,10 @@ interface IVehicleMethods {
     getProblems(): Promise<IProblem[]>
 }
 
+type HydratedVehicle = HydratedDocument<IVehicle, IVehicleMethods> | null
+
 interface IVehicleModel extends Model<IVehicle, IVehicleMethods> {
-    findVehiclesByYear(year: number): Promise<HydratedDocument<IVehicle, IVehicleMethods>[]>
+    findVehiclesByYear(year: number): Promise<HydratedVehicle[]>
 }
 
 const vehicleSchema = new Schema(
@@ -56,12 +58,11 @@ vehicleSchema.method("getProblems", async function getProblems(): Promise<IProbl
 })
 
 // static methods
-vehicleSchema.static("findVehiclesByYear", function findVehiclesByYear(year: number): Promise<
-    HydratedDocument<IVehicle, IVehicleMethods>[]
-> {
+vehicleSchema.static("findVehiclesByYear", function findVehiclesByYear(year: number): Promise<HydratedVehicle[]> {
     return this.find({ year })
 })
 
 const Vehicle = mongoose.model<IVehicle, IVehicleModel>("vehicle", vehicleSchema)
 
+export { IVehicle, HydratedVehicle }
 export default Vehicle

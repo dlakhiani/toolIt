@@ -16,6 +16,7 @@ export default ({ mode }) => {
         resolve: {
             alias: {
                 "@": path.resolve(__dirname, "./src"),
+                "@interfaces": path.resolve(__dirname, "./interfaces"),
             },
         },
         build: {
