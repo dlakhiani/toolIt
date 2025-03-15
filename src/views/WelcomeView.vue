@@ -1,109 +1,116 @@
 <template>
-    <div class="auth-page">
-        <!-- Sign In Form (Default) -->
-        <div
-            v-if="activeTab === 'signin'"
-            class="form-section"
-        >
-            <h1>Sign In</h1>
-            <form @submit.prevent="loginUser">
-                <div class="form-group">
-                    <label>Email:</label>
-                    <input
-                        v-model="email"
-                        type="email"
-                        placeholder="Enter your email"
-                        required
-                    />
-                </div>
-                <div class="form-group">
-                    <label>Password:</label>
-                    <input
-                        v-model="password"
-                        type="password"
-                        placeholder="Enter your password"
-                        required
-                    />
-                </div>
-                <button
-                    type="submit"
-                    class="submit-button"
+    <div class="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+        <div class="w-full max-w-md bg-white shadow-md rounded-lg p-6">
+            <!-- Sign In Form -->
+            <div v-if="activeTab === 'signin'">
+                <h1 class="text-2xl font-semibold text-center mb-4">Sign In</h1>
+                <form
+                    @submit.prevent="loginUser"
+                    class="space-y-4"
                 >
-                    Sign In
-                </button>
-            </form>
-            <p class="toggle-text">
-                Don't have an account?
-                <button
-                    @click="activeTab = 'signup'"
-                    class="link-button"
+                    <div>
+                        <label class="block text-gray-700">Email:</label>
+                        <input
+                            v-model="email"
+                            type="email"
+                            placeholder="Enter your email"
+                            required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">Password:</label>
+                        <input
+                            v-model="password"
+                            type="password"
+                            placeholder="Enter your password"
+                            required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        class="w-full py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+                    >
+                        Sign In
+                    </button>
+                </form>
+                <p class="text-center mt-3 text-gray-600">
+                    Don't have an account?
+                    <button
+                        @click="activeTab = 'signup'"
+                        class="text-blue-600 hover:underline"
+                    >
+                        Sign Up
+                    </button>
+                </p>
+                <div
+                    v-if="errorMessage"
+                    class="mt-3 text-red-500 text-center"
                 >
-                    Sign Up
-                </button>
-            </p>
-            <div
-                v-if="errorMessage"
-                class="error-message"
-            >
-                {{ errorMessage }}
+                    {{ errorMessage }}
+                </div>
             </div>
-        </div>
 
-        <!-- Sign Up Form -->
-        <div
-            v-else-if="activeTab === 'signup'"
-            class="form-section"
-        >
-            <h1>Sign Up</h1>
-            <form @submit.prevent="registerUser">
-                <div class="form-group">
-                    <label>Name:</label>
-                    <input
-                        v-model="name"
-                        type="text"
-                        placeholder="Enter your name"
-                        required
-                    />
-                </div>
-                <div class="form-group">
-                    <label>Email:</label>
-                    <input
-                        v-model="email"
-                        type="email"
-                        placeholder="Enter your email"
-                        required
-                    />
-                </div>
-                <div class="form-group">
-                    <label>Password:</label>
-                    <input
-                        v-model="password"
-                        type="password"
-                        placeholder="Enter your password"
-                        required
-                    />
-                </div>
-                <button
-                    type="submit"
-                    class="submit-button"
+            <!-- Sign Up Form -->
+            <div v-else-if="activeTab === 'signup'">
+                <h1 class="text-2xl font-semibold text-center mb-4">Sign Up</h1>
+                <form
+                    @submit.prevent="registerUser"
+                    class="space-y-4"
                 >
-                    Sign Up
-                </button>
-            </form>
-            <p class="toggle-text">
-                Already have an account?
-                <button
-                    @click="activeTab = 'signin'"
-                    class="link-button"
+                    <div>
+                        <label class="block text-gray-700">Name:</label>
+                        <input
+                            v-model="name"
+                            type="text"
+                            placeholder="Enter your name"
+                            required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">Email:</label>
+                        <input
+                            v-model="email"
+                            type="email"
+                            placeholder="Enter your email"
+                            required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">Password:</label>
+                        <input
+                            v-model="password"
+                            type="password"
+                            placeholder="Enter your password"
+                            required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        class="w-full py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+                    >
+                        Sign Up
+                    </button>
+                </form>
+                <p class="text-center mt-3 text-gray-600">
+                    Already have an account?
+                    <button
+                        @click="activeTab = 'signin'"
+                        class="text-blue-600 hover:underline"
+                    >
+                        Sign In
+                    </button>
+                </p>
+                <div
+                    v-if="errorMessage"
+                    class="mt-3 text-red-500 text-center"
                 >
-                    Sign In
-                </button>
-            </p>
-            <div
-                v-if="errorMessage"
-                class="error-message"
-            >
-                {{ errorMessage }}
+                    {{ errorMessage }}
+                </div>
             </div>
         </div>
     </div>
@@ -187,86 +194,3 @@
         },
     })
 </script>
-
-<style scoped>
-    /* General Page Styling */
-    .auth-page {
-        max-width: 400px;
-        margin: 0 auto;
-        padding: 20px;
-        text-align: center;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        background-color: #f9f9f9;
-    }
-
-    /* Forms */
-    .form-section {
-        text-align: left;
-    }
-
-    h1 {
-        font-size: 1.8rem;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 5px;
-    }
-
-    .form-group input {
-        width: 100%;
-        padding: 8px;
-        font-size: 1rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-
-    .submit-button {
-        width: 100%;
-        padding: 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background-color 0.3s ease;
-    }
-
-    .submit-button:hover {
-        background-color: #0056b3;
-    }
-
-    /* Error Message */
-    .error-message {
-        margin-top: 15px;
-        color: red;
-        font-size: 0.9rem;
-    }
-
-    /* Toggle Text */
-    .toggle-text {
-        text-align: center;
-        margin-top: 10px;
-    }
-
-    .link-button {
-        background: none;
-        border: none;
-        color: #007bff;
-        cursor: pointer;
-        font-size: 1rem;
-        text-decoration: underline;
-    }
-
-    .link-button:hover {
-        color: #0056b3;
-    }
-</style>

@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+/* Global Theme Variables */
+@theme {
+    --brand-primary: #1e40af; /* Tailwind blue-700 */
+    --brand-secondary: #2563eb; /* Tailwind blue-600 */
+    --brand-light: #60a5fa; /* Tailwind blue-400 */
+    --brand-dark: #0a3f89; /* Dark blue */
+    --gray-light: #f3f4f6; /* Tailwind gray-200 */
+    --gray-dark: #374151; /* Tailwind gray-700 */
+    --text-primary: #111827; /* Dark text */
+    --text-secondary: #4b5563; /* Gray text */
+}
+
+/* Apply Text Color to Body */
+body {
+    color: var(--text-primary);
+    background-color: var(--gray-light);
+}
