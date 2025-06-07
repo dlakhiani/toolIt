@@ -29,12 +29,6 @@
             "@interfaces": ["interfaces/index.ts"]
         }
     },
-    "ts-node": {
-        "esm": true,
-        "require": ["tsconfig-paths/register"],
-        "pretty": true,
-        "experimentalSpecifierResolution": "node"
-    },
     "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
     "exclude": ["node_modules"],
     "references": [{ "path": "./tsconfig.node.json" }]
