@@ -1,7 +1,7 @@
 import { chromium } from "playwright"
 import { sleep } from "openai/core"
 import path from "path"
-import { writeFile, mkdir } from "fs/promises"
+import { writeFile, mkdir, readdir } from "fs/promises"
 
 const baseUrl = 'https://www.startmycar.com';
 
@@ -46,7 +46,6 @@ async function buildCarModels(page, models) {
     for (const model of models) {
         console.log(`grabbing model ${model.name}: ${modelContent.length} of ${models.length}`);
         modelContent.push(await grabCarModelContent(page, model));
-        break;
     }
 
     return modelContent;
@@ -141,9 +140,14 @@ async function grabHtmlContent(page, url) {
     const page = await browser.newPage();
 
     const carMakes = await grabCarMakes(page);
-    for (const make of carMakes) {
+    for (const [i, make] of carMakes.entries()) {
+        if (await carMakeFileExists(make.ref)) {
+            console.log(`found ${make.ref} in makes folder, skipping`);
+            continue;
+        }
+
         const url = make.url;
-        console.log(`grabbing make: ${url}`);
+        console.log(`at [${i} of ${carMakes.length}] => grabbing make: ${url}`);
 
         const models = await grabCarModels(page, url);
         console.log(`grabbed models for ${make.url}: ${models.length}`);
@@ -156,6 +160,16 @@ async function grabHtmlContent(page, url) {
 
     await browser.close();
 })();
+
+async function carMakeFileExists(make) {
+    try {
+        const makeFiles = await readdir(path.resolve("./makes"))
+        return makeFiles.some(file => file.startsWith(make))
+    } catch (error) {
+        console.error(`failed to read makes folder: ${error}`);
+        return false;
+    }
+}
 
 async function writeMakeToFile(title, content, ext = 'json') {
     const formattedTimestamp = new Date().toISOString().replace(/[:T]/g, "-").split(".")[0];
