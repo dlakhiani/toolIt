@@ -1,0 +1,47 @@
+name: scrape car data
+
+on:
+    schedule:
+        # runs on UTC: 01:00 && 13:00 => every sunday
+        - cron: '0 1 * * 0'
+        - cron: '0 13 * * 0'
+    # manual triggering
+    workflow_dispatch:
+
+permissions:
+    contents: write
+
+jobs:
+    scrape:
+        name: start my car
+        runs-on: ubuntu-latest
+        timeout-minutes: 60
+
+        steps:
+          - name: checkout repository
+            uses: actions/checkout@v3
+
+          - name: setup node
+            uses: actions/setup-node@v3
+            with:
+                node-version: '18'
+                cache: 'npm'
+
+          - name: install deps
+            run: npm ci
+
+          - name: install browser
+            run: npx playwright install chromium
+
+          - name: run script
+            run: |
+                cd server/tools
+                node scrapeGuide.js
+
+          - name: commit and push if changed
+            run: |
+                git config --local user.email "github-actions[bot]@users.noreply.github.com"
+                git config --local user.name "github-actions[bot]"
+                git add server/tools/makes/
+                git diff --staged --quiet || git commit -m "auto-update car data"
+                git push origin HEAD:${GITHUB_REF}
