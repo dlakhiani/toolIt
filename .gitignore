@@ -1,6 +1,7 @@
 # dirs
 build
 node_modules
+.idea
 
 # files
 .env
